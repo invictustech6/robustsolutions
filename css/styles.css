@@ -92,12 +92,14 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.2rem; }
 .site-header { position: sticky; top: 0; z-index: 70; }
 
 /* ============================================================ Header 1 */
-/* Contact strip is hidden on mobile for a compact header; its details move to the mobile menu. */
-.header-1 { display: none; background: linear-gradient(90deg, var(--navy), var(--blue) 70%, var(--blue-600)); color: #fff; font-size: 0.84rem; }
+.header-1 { display: block; overflow-x: hidden; background: linear-gradient(90deg, var(--navy), var(--blue) 70%, var(--blue-600)); color: #fff; font-size: 0.84rem; }
 .header-1 a { color: #fff; }
 .header-1 a:hover { color: var(--gold-bright); }
-.header-1__inner { width: min(100% - 1.4rem, var(--max-wide)); margin-inline: auto; display: flex; flex-wrap: wrap; gap: 0.3rem 1.4rem; justify-content: center; align-items: center; padding: 0.42rem 0; }
-.header-1__contacts { display: flex; flex-wrap: wrap; gap: 0.3rem 1.1rem; align-items: center; }
+.header-1 .chip-cta { display: none; }
+.header-1__inner { width: min(100% - 1.4rem, var(--max-wide)); margin-inline: auto; display: flex; flex-wrap: nowrap; gap: 0.3rem 1.1rem; justify-content: flex-start; align-items: center; padding: 0.42rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.header-1__inner::-webkit-scrollbar { display: none; }
+.header-1__contacts { display: flex; flex-wrap: nowrap; gap: 0.3rem 1.1rem; align-items: center; flex: 0 0 auto; }
+.site-header.is-compact .header-1 { display: none; }
 .header-1__item { display: inline-flex; align-items: center; gap: 0.45rem; white-space: nowrap; opacity: 0.94; }
 .header-1__item .ico { width: 14px; height: 14px; color: var(--gold-bright); flex-shrink: 0; opacity: 1; }
 .social a .ico { width: 16px; height: 16px; }
@@ -453,11 +455,11 @@ body.nav-open { overflow: hidden; }
 @media (min-width: 900px) {
   .brand__text { display: block; }
   .nav { display: flex; }
-  .header-1 { display: block; }
+  .header-1__inner { justify-content: center; overflow: visible; flex-wrap: wrap; }
+  .header-1__contacts { flex-wrap: wrap; }
   .header-tools .header-cta { display: inline-flex; padding: 0.82rem 1.4rem; font-size: 0.95rem; box-shadow: 0 10px 24px rgba(16,60,140,0.28); }
   .header-cta .cta-short { display: none; }
   .header-cta .cta-full { display: inline; }
-  .header-1 .chip-cta { display: none; } /* avoid duplicate quote CTA; header-2 button is primary on desktop */
   .nav-toggle { display: none; }
   .credibility__inner { grid-template-columns: auto 1fr; }
   .hero__inner { grid-template-columns: 1.05fr 1fr; }

@@ -10,11 +10,15 @@
   const sideRail = $(".side-rail");
   const primaryNav = $("#primary-nav");
   const wideRail = () => window.matchMedia("(min-width: 1440px)").matches;
+  const setStack = () => {
+    if (siteHeader) document.documentElement.style.setProperty("--stack", siteHeader.offsetHeight + "px");
+  };
   const onScroll = () => {
     const y = window.scrollY || 0;
-    const useRail = y > 280 && wideRail();
+    const compact = y > 72;
+    const useRail = compact && wideRail();
     header2?.classList.toggle("is-scrolled", y > 8);
-    siteHeader?.classList.toggle("is-compact", useRail);
+    siteHeader?.classList.toggle("is-compact", compact);
     sideRail?.classList.toggle("is-visible", useRail);
     if (primaryNav) {
       primaryNav.setAttribute("aria-hidden", useRail ? "true" : "false");
@@ -22,16 +26,10 @@
       else primaryNav.removeAttribute("inert");
     }
     if (sideRail) sideRail.setAttribute("aria-hidden", useRail ? "false" : "true");
+    setStack();
   };
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
-
-  // Expose the sticky header height so the mobile menu docks exactly below it,
-  // regardless of how the contact strip wraps on small screens.
-  const setStack = () => {
-    if (siteHeader) document.documentElement.style.setProperty("--stack", siteHeader.offsetHeight + "px");
-  };
-  setStack();
   window.addEventListener("resize", () => { setStack(); onScroll(); }, { passive: true });
   window.addEventListener("load", () => { setStack(); onScroll(); });
 
