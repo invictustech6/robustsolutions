@@ -8,21 +8,14 @@
   const siteHeader = $(".site-header");
   const header2 = $(".header-2");
   const sideRail = $(".side-rail");
-  const primaryNav = $("#primary-nav");
   const wideRail = () => window.matchMedia("(min-width: 1440px)").matches;
   const onScroll = () => {
     const y = window.scrollY || 0;
-    const compact = y > 280;
-    const useRail = compact && wideRail();
+    const showRail = y > 280 && wideRail();
     header2?.classList.toggle("is-scrolled", y > 8);
-    siteHeader?.classList.toggle("is-compact", useRail);
-    sideRail?.classList.toggle("is-visible", useRail);
-    if (primaryNav) {
-      primaryNav.setAttribute("aria-hidden", useRail ? "true" : "false");
-      if (useRail) primaryNav.setAttribute("inert", "");
-      else primaryNav.removeAttribute("inert");
-    }
-    if (sideRail) sideRail.setAttribute("aria-hidden", useRail ? "false" : "true");
+    siteHeader?.classList.remove("is-compact");
+    sideRail?.classList.toggle("is-visible", showRail);
+    if (sideRail) sideRail.setAttribute("aria-hidden", showRail ? "false" : "true");
   };
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();

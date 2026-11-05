@@ -464,20 +464,12 @@ body.nav-open { overflow: hidden; }
   .grid-4 { grid-template-columns: repeat(4, 1fr); }
   .process { grid-template-columns: repeat(5, 1fr); }
 }
-/* Side-rail stepper: wide screens only, and only after leaving the header.
-   When it is visible the duplicate top nav is hidden so the two never compete. */
+/* Named side labels: wide screens only, after leaving the header. Not links. */
 @media (min-width: 1440px) {
-  .site-header.is-compact .nav { display: none; }
-  .side-rail { display: flex; position: fixed; left: 0.55rem; top: 50%; transform: translateY(calc(-50% + 10px)); z-index: 40; flex-direction: column; gap: 0; opacity: 0; pointer-events: none; transition: opacity 0.35s var(--ease), transform 0.35s var(--ease); }
-  .side-rail.is-visible { opacity: 1; pointer-events: auto; transform: translateY(-50%); }
-  .side-rail__step { position: relative; display: flex; align-items: center; padding: 0.22rem 0; color: var(--blue); opacity: 0; transform: translateX(-10px); }
-  .side-rail.is-visible .side-rail__step { opacity: 1; transform: none; transition: opacity 0.35s var(--ease), transform 0.35s var(--ease); transition-delay: calc(var(--i, 0) * 70ms); }
-  .side-rail__step:not(:last-child)::before { content: ""; position: absolute; left: 0.8rem; top: 1.7rem; bottom: -0.22rem; width: 2px; background: linear-gradient(180deg, var(--gold), rgba(16,60,140,0.18)); }
-  .side-rail__num { width: 1.65rem; height: 1.65rem; border-radius: 50%; border: 1.5px solid var(--blue); background: #fff; color: var(--blue); display: grid; place-items: center; font-family: var(--fx-display); font-size: 0.62rem; font-weight: 800; position: relative; z-index: 1; box-shadow: var(--shadow-xs); }
-  .side-rail__label { position: absolute; left: 2.05rem; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-family: var(--fx-display); background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border: 1px solid var(--line); padding: 0.28rem 0.6rem; border-radius: var(--r-pill); box-shadow: var(--shadow-xs); white-space: nowrap; opacity: 0; pointer-events: none; transform: translateX(-6px); transition: opacity 0.2s var(--ease), transform 0.2s var(--ease); }
-  .side-rail__step:hover .side-rail__label, .side-rail__step:focus-visible .side-rail__label { opacity: 1; transform: none; border-color: var(--gold); color: var(--blue-600); }
-  .side-rail__step:focus-visible .side-rail__num { outline: 2px solid var(--gold); outline-offset: 2px; }
-  .side-rail__step[aria-current="page"] .side-rail__num { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .side-rail { display: flex; position: fixed; left: 0.55rem; top: 50%; transform: translateY(-50%); z-index: 40; flex-direction: column; gap: 0.4rem; opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease); }
+  .side-rail.is-visible { opacity: 1; }
+  .side-rail__item { writing-mode: vertical-rl; transform: rotate(180deg); background: rgba(255,255,255,0.94); backdrop-filter: blur(8px); border: 1px solid var(--line); color: var(--blue); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--fx-display); padding: 0.85rem 0.35rem; border-radius: var(--r-sm); box-shadow: var(--shadow-xs); }
+  .side-rail__item[aria-current="page"] { border-color: var(--gold); color: var(--blue-600); background: #fff; }
 }
 
 @media (prefers-reduced-motion: reduce) {
