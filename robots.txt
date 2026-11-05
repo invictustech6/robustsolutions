@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://robustsolutions.in/sitemap.xml
+Sitemap: https://robustsolutions.vercel.app/sitemap.xml
