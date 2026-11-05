@@ -2,13 +2,10 @@
   "redirects": [
     { "source": "/about-us", "destination": "/about/", "permanent": true },
     { "source": "/about-us/", "destination": "/about/", "permanent": true },
-    { "source": "/services/", "destination": "/services/", "permanent": false },
     { "source": "/contact-us", "destination": "/contact/", "permanent": true },
     { "source": "/contact-us/", "destination": "/contact/", "permanent": true },
     { "source": "/contact", "destination": "/contact/", "permanent": true },
     { "source": "/book-a-test", "destination": "/book-a-test/", "permanent": true },
-    { "source": "/gallery", "destination": "/gallery/", "permanent": true },
-    { "source": "/gallery/", "destination": "/gallery/", "permanent": false },
     { "source": "/testing-facilities-as-per-indian-standards-for-cables-and-conductors", "destination": "/services/indian-standards/", "permanent": true },
     { "source": "/testing-facilities-as-per-indian-standards-for-cables-and-conductors/", "destination": "/services/indian-standards/", "permanent": true },
     { "source": "/testing-facilities-as-per-iec-standards-for-cables-and-conductors", "destination": "/services/iec-standards/", "permanent": true },
