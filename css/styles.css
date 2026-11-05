@@ -413,6 +413,7 @@ body.nav-open { overflow: hidden; }
   .scope-spectrum { grid-template-columns: repeat(4, 1fr); }
   .grid-certs { grid-template-columns: repeat(5, 1fr); }
   .stat-ribbon { grid-template-columns: repeat(4, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (min-width: 900px) {
   .brand__text { display: block; }
@@ -427,6 +428,7 @@ body.nav-open { overflow: hidden; }
   .grid-2, .form-layout, .witness-lanes, .showcase { grid-template-columns: 1fr 1fr; }
   .grid-3, .process { grid-template-columns: repeat(3, 1fr); }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1.3fr; align-items: start; }
 }
 @media (min-width: 1100px) {
   .grid-4 { grid-template-columns: repeat(4, 1fr); }
