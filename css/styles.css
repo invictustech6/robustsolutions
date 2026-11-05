@@ -322,12 +322,20 @@ body.nav-open { overflow: hidden; }
 .showcase-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(180deg, var(--gold), var(--gold-bright)); }
 .showcase-card h3 { color: var(--blue); font-size: 1.1rem; }
 .showcase-card .metric { font-family: var(--fx-display); font-weight: 800; color: var(--navy); font-size: 1.4rem; }
-.quote-card { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 1.5rem 1.5rem 1.35rem; box-shadow: var(--shadow-xs); position: relative; }
-.quote-card::before { content: "“"; position: absolute; top: 0.55rem; right: 1rem; font-family: var(--fx-display); font-size: 3.4rem; line-height: 1; color: var(--gold); opacity: 0.45; }
-.quote-card p { margin: 0 0 1.1rem; padding-right: 1.6rem; color: var(--ink); font-size: 1.02rem; line-height: 1.55; }
-.quote-card footer { display: flex; flex-direction: column; gap: 0.15rem; }
-.quote-card strong { font-family: var(--fx-display); color: var(--navy); font-size: 0.95rem; }
-.quote-card span { color: var(--muted); font-size: 0.88rem; }
+.quotes { text-align: center; max-width: 46rem; }
+.quotes__title { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 0.4rem; }
+.quotes__title .accent { color: var(--gold-deep); }
+.quotes__stage { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.4rem; margin-top: 1.2rem; }
+.quotes__viewport { position: relative; min-height: 22rem; }
+.quotes__slide { position: absolute; inset: 0; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.5rem 0.8rem 0; opacity: 0; visibility: hidden; transition: opacity 0.35s var(--ease); }
+.quotes__slide.is-active { opacity: 1; visibility: visible; position: relative; }
+.quotes__mark { display: block; font-family: Georgia, "Times New Roman", serif; font-size: 4.4rem; line-height: 0.7; color: var(--gold); font-weight: 400; margin-bottom: 1.1rem; }
+.quotes__slide p { margin: 0 auto 1.6rem; max-width: 36rem; color: #3d4a5c; font-size: clamp(1.05rem, 2.4vw, 1.22rem); line-height: 1.7; font-style: italic; }
+.quotes__slide cite { font-style: normal; font-family: var(--fx-display); font-weight: 700; color: var(--gold-deep); font-size: 1.12rem; display: flex; flex-direction: column; gap: 0.15rem; }
+.quotes__slide cite span { font-weight: 500; color: var(--muted); font-size: 0.88rem; }
+.quotes__nav { width: 2.4rem; height: 2.4rem; border: 0; background: transparent; color: var(--blue); font-size: 2rem; line-height: 1; cursor: pointer; border-radius: 50%; display: grid; place-items: center; }
+.quotes__nav:hover { color: var(--gold-deep); background: var(--blue-soft); }
+.quotes__note { margin: 1.4rem 0 0; color: var(--muted); font-size: 0.82rem; }
 
 /* Industries */
 .industry-card { display: flex; gap: 1rem; align-items: flex-start; }

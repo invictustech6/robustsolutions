@@ -335,27 +335,31 @@
       </div>
     </section>
 
-    <section class="section section--soft" id="testimonials">
-      <div class="container--wide">
-        <div class="section-head section-head--center reveal">
-          <p class="eyebrow">Client feedback</p>
-          <h2 class="section-title">What engineering teams tell us</h2>
-          <p class="lead">Sample comments that illustrate typical laboratory feedback. Named client quotes can replace these once approved.</p>
+    <section class="section" id="testimonials">
+      <div class="container quotes reveal">
+        <h2 class="quotes__title">What our <span class="accent">clients</span> say</h2>
+        <div class="quotes__stage" data-quotes>
+          <button class="quotes__nav" type="button" data-quotes-prev aria-label="Previous testimonial">‹</button>
+          <div class="quotes__viewport">
+            <blockquote class="quotes__slide is-active">
+              <span class="quotes__mark" aria-hidden="true">”</span>
+              <p>Scope was confirmed before we sent samples, and the signed report mapped cleanly onto our IS 7098 compliance file. Clarifications from the laboratory team were prompt and the run went as planned.</p>
+              <cite>QA Manager<span>Cable manufacturer</span></cite>
+            </blockquote>
+            <blockquote class="quotes__slide">
+              <span class="quotes__mark" aria-hidden="true">”</span>
+              <p>Online witnessing let our client observe the solar DC cable run without travelling to Bhiwadi. The session window matched the test plan and the people conducting the test showed sound technical knowledge of the method.</p>
+              <cite>Procurement lead<span>Solar EPC contractor</span></cite>
+            </blockquote>
+            <blockquote class="quotes__slide">
+              <span class="quotes__mark" aria-hidden="true">”</span>
+              <p>Turnaround was locked with the quote, and the IEC pathway matched the standard we specified for the charging-cable assembly. Procedure and reporting were professional throughout.</p>
+              <cite>Technical director<span>EV charging OEM</span></cite>
+            </blockquote>
+          </div>
+          <button class="quotes__nav" type="button" data-quotes-next aria-label="Next testimonial">›</button>
         </div>
-        <div class="grid-3" style="margin-top:2.2rem">
-          <blockquote class="quote-card reveal">
-            <p>“Scope was confirmed before we sent samples, and the signed report mapped cleanly onto our IS 7098 compliance file.”</p>
-            <footer><strong>QA Manager</strong><span>Cable manufacturer</span></footer>
-          </blockquote>
-          <blockquote class="quote-card reveal" data-delay="1">
-            <p>“Online witnessing let our client observe the solar DC cable run without travelling to Bhiwadi — the session window matched the test plan.”</p>
-            <footer><strong>Procurement lead</strong><span>Solar EPC contractor</span></footer>
-          </blockquote>
-          <blockquote class="quote-card reveal" data-delay="2">
-            <p>“Turnaround was locked with the quote, and the IEC pathway matched the standard we specified for the charging-cable assembly.”</p>
-            <footer><strong>Technical director</strong><span>EV charging OEM</span></footer>
-          </blockquote>
-        </div>
+        <p class="quotes__note">Illustrative samples of typical laboratory feedback. Named client quotes can replace these once approved.</p>
       </div>
     </section>
 

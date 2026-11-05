@@ -144,6 +144,27 @@
     layout(); start();
   }
 
+  /* ---------- Testimonials carousel ---------- */
+  const quotesRoot = $("[data-quotes]");
+  if (quotesRoot) {
+    const slides = $$(".quotes__slide", quotesRoot);
+    let qi = 0;
+    const show = (i) => {
+      qi = (i + slides.length) % slides.length;
+      slides.forEach((s, n) => s.classList.toggle("is-active", n === qi));
+    };
+    $("[data-quotes-prev]", quotesRoot)?.addEventListener("click", () => show(qi - 1));
+    $("[data-quotes-next]", quotesRoot)?.addEventListener("click", () => show(qi + 1));
+    let qStart = null;
+    quotesRoot.addEventListener("touchstart", (e) => (qStart = e.touches[0].clientX), { passive: true });
+    quotesRoot.addEventListener("touchend", (e) => {
+      if (qStart === null) return;
+      const dx = e.changedTouches[0].clientX - qStart;
+      if (Math.abs(dx) > 40) show(qi + (dx < 0 ? 1 : -1));
+      qStart = null;
+    });
+  }
+
   /* ---------- Count-up stats ---------- */
   const counters = $$("[data-count]");
   if (counters.length) {
