@@ -8,10 +8,21 @@
   const siteHeader = $(".site-header");
   const header2 = $(".header-2");
   const sideRail = $(".side-rail");
+  const primaryNav = $("#primary-nav");
+  const wideRail = () => window.matchMedia("(min-width: 1440px)").matches;
   const onScroll = () => {
     const y = window.scrollY || 0;
+    const compact = y > 280;
+    const useRail = compact && wideRail();
     header2?.classList.toggle("is-scrolled", y > 8);
-    sideRail?.classList.toggle("is-visible", y > 320);
+    siteHeader?.classList.toggle("is-compact", useRail);
+    sideRail?.classList.toggle("is-visible", useRail);
+    if (primaryNav) {
+      primaryNav.setAttribute("aria-hidden", useRail ? "true" : "false");
+      if (useRail) primaryNav.setAttribute("inert", "");
+      else primaryNav.removeAttribute("inert");
+    }
+    if (sideRail) sideRail.setAttribute("aria-hidden", useRail ? "false" : "true");
   };
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
@@ -22,25 +33,34 @@
     if (siteHeader) document.documentElement.style.setProperty("--stack", siteHeader.offsetHeight + "px");
   };
   setStack();
-  window.addEventListener("resize", setStack, { passive: true });
-  window.addEventListener("load", setStack);
+  window.addEventListener("resize", () => { setStack(); onScroll(); }, { passive: true });
+  window.addEventListener("load", () => { setStack(); onScroll(); });
 
   /* ---------- Mobile nav ---------- */
   const navToggle = $(".nav-toggle");
   const mobileNav = $(".mobile-nav");
   if (navToggle && mobileNav) {
+    const closeNav = ({ focusToggle = false } = {}) => {
+      mobileNav.classList.remove("is-open");
+      document.body.classList.remove("nav-open");
+      navToggle.setAttribute("aria-expanded", "false");
+      if (focusToggle) navToggle.focus();
+    };
     navToggle.addEventListener("click", () => {
       const open = mobileNav.classList.toggle("is-open");
       document.body.classList.toggle("nav-open", open);
       navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) {
+        const first = mobileNav.querySelector("a");
+        if (first) first.focus();
+      }
     });
     $$("a", mobileNav).forEach((a) =>
-      a.addEventListener("click", () => {
-        mobileNav.classList.remove("is-open");
-        document.body.classList.remove("nav-open");
-        navToggle.setAttribute("aria-expanded", "false");
-      })
+      a.addEventListener("click", () => closeNav())
     );
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && mobileNav.classList.contains("is-open")) closeNav({ focusToggle: true });
+    });
   }
 
   /* ---------- Scroll reveal ---------- */
