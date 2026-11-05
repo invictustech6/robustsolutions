@@ -1,34 +1,31 @@
 # Robust Testing Solutions — Website
 
-Original static rebuild for [robustsolutions.in](https://robustsolutions.in/) using the logo palette **white / blue (#103C8C) / gold (#C9A264)**.
+Original static rebuild for [robustsolutions.in](https://robustsolutions.in/) using white / blue (#103C8C) / gold (#C9A264).
 
-## Preview locally
+## What was recovered from the live site
+
+- Company about copy (cleaned; ISO typo fixed)
+- Facility exterior photo and laboratory bench photo
+- Logo, favicon, BIS mark, NABL mark **TC-10626**
+- Contact phones, emails, address, WhatsApp
+- Service pathway titles (six testing facilities)
+
+Intentionally **not** copied: IT-recruitment blocks, Lorem testimonials, template “client” logos, compromised `/gallery` gambling pages, spam sitemap URLs.
+
+## Preview
 
 ```bash
 npx --yes serve .
 ```
 
-Open the printed local URL (typically `http://localhost:3000`).
+## Deploy notes (Vercel)
 
-## Site map
+`vercel.json` maps old 404 paths to the new IA and sends known spam URLs to `410.html`.
 
-- `/` Home — carousel, about, certificates lightbox, services, capability matrix, clients, testimonials
-- `/about/` Company profile and accreditations
-- `/services/` plus six capability pages
-- `/witness-facility/` Online and on-site witnessing
-- `/gallery/` Filterable gallery
-- `/careers/` Jobs and Training
-- `/contact/` Details plus spam-resistant query form
-- `/book-a-test/` Booking / quote / witness intent
-- `/privacy/` Privacy policy
-- `sitemap.xml`, `robots.txt` — legitimate URLs only
+## Still needs from Robust
 
-## Docs
-
-Project analysis and redesign brief live under `docs/`.
-
-## Not included yet (by design)
-
-- Live CAPTCHA/OTP keys and form mail backend
-- Client-supplied certificates, logos, testimonials, lab photography
+- Full certificate PDFs (ISO 9001, ISO 17025/NABL scope, BIS letter)
+- Authorized client logos and QA testimonials
+- Extra gallery / training photos
+- CAPTCHA site keys + form mail backend
 - Confirmed LinkedIn company URL
