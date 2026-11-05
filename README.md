@@ -1,25 +1,34 @@
-﻿# Robust Testing Solutions — Website
+# Robust Testing Solutions — Website
 
-Clean rebuild scaffold for [robustsolutions.in](https://robustsolutions.in/) (white / blue / gold brand).
+Original static rebuild for [robustsolutions.in](https://robustsolutions.in/) using the logo palette **white / blue (#103C8C) / gold (#C9A264)**.
 
-## Layout
-
-- Static multi-page site at repo root (`index.html`, key pages, `services/`)
-- Shared styles: `css/styles.css`
-- Behavior: `js/main.js` (sticky headers, mobile nav, cert lightbox stubs, form honeypot)
-- Brand assets: `assets/images/`
-- Project docs: `docs/` (site analysis + redesign brief + evidence screenshots)
-
-## Local preview
-
-Open `index.html` in a browser, or serve the folder:
+## Preview locally
 
 ```bash
 npx --yes serve .
 ```
 
-## Notes
+Open the printed local URL (typically `http://localhost:3000`).
 
-- Forms are front-end demos until CAPTCHA/OTP + mail backend are wired.
-- Certificates, client logos, testimonials, and photography are structural placeholders pending Robust team assets.
-- See `docs/robustsolutions-redesign-brief.md` for MOM checklist and phased plan.
+## Site map
+
+- `/` Home — carousel, about, certificates lightbox, services, capability matrix, clients, testimonials
+- `/about/` Company profile and accreditations
+- `/services/` plus six capability pages
+- `/witness-facility/` Online and on-site witnessing
+- `/gallery/` Filterable gallery
+- `/careers/` Jobs and Training
+- `/contact/` Details plus spam-resistant query form
+- `/book-a-test/` Booking / quote / witness intent
+- `/privacy/` Privacy policy
+- `sitemap.xml`, `robots.txt` — legitimate URLs only
+
+## Docs
+
+Project analysis and redesign brief live under `docs/`.
+
+## Not included yet (by design)
+
+- Live CAPTCHA/OTP keys and form mail backend
+- Client-supplied certificates, logos, testimonials, lab photography
+- Confirmed LinkedIn company URL

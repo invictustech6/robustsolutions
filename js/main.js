@@ -9,10 +9,9 @@
 
   const onScroll = () => {
     const y = window.scrollY || 0;
-    if (header2) header2.classList.toggle("is-scrolled", y > 8);
-    if (sideRail) sideRail.classList.toggle("is-visible", y > 280);
+    header2?.classList.toggle("is-scrolled", y > 8);
+    sideRail?.classList.toggle("is-visible", y > 260);
   };
-
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
@@ -24,34 +23,48 @@
     });
   }
 
-  // Hero carousel
-  const slides = Array.from(document.querySelectorAll(".hero__slide"));
-  if (slides.length > 1) {
-    let i = 0;
-    setInterval(() => {
-      slides[i].classList.remove("is-active");
-      i = (i + 1) % slides.length;
-      slides[i].classList.add("is-active");
-    }, 5500);
-  }
+  // Carousel
+  const slides = [...document.querySelectorAll(".hero__slide")];
+  const dots = [...document.querySelectorAll("[data-hero-dot]")];
+  let idx = 0;
+  let timer;
+  const show = (n) => {
+    if (!slides.length) return;
+    slides[idx]?.classList.remove("is-active");
+    dots[idx]?.classList.remove("is-active");
+    idx = (n + slides.length) % slides.length;
+    slides[idx].classList.add("is-active");
+    dots[idx]?.classList.add("is-active");
+  };
+  const start = () => {
+    if (slides.length < 2) return;
+    timer = setInterval(() => show(idx + 1), 5600);
+  };
+  dots.forEach((d, i) =>
+    d.addEventListener("click", () => {
+      clearInterval(timer);
+      show(i);
+      start();
+    })
+  );
+  start();
 
-  // Certificate lightbox placeholders
+  // Certificate lightbox
   document.querySelectorAll("[data-cert]").forEach((el) => {
     el.addEventListener("click", () => {
       if (!lightbox || !lightboxBody) return;
       const title = el.getAttribute("data-cert") || "Certificate";
-      lightboxBody.innerHTML = `<h3>${title}</h3><p class="note">Full-size certificate asset pending from Robust team. Structure matches GTL-style lightbox.</p>`;
+      const detail = el.getAttribute("data-cert-detail") || "";
+      lightboxBody.innerHTML = `<p class="eyebrow">Accreditation document</p><h3>${title}</h3><p>${detail || "Full-resolution certificate file pending from Robust team. Lightbox structure is ready for PDF/image assets."}</p><p class="note"><span class="client-needed">Client asset needed</span></p>`;
       lightbox.classList.add("is-open");
       lightbox.setAttribute("aria-hidden", "false");
+      lightboxClose?.focus();
     });
   });
-
   const closeLightbox = () => {
-    if (!lightbox) return;
-    lightbox.classList.remove("is-open");
-    lightbox.setAttribute("aria-hidden", "true");
+    lightbox?.classList.remove("is-open");
+    lightbox?.setAttribute("aria-hidden", "true");
   };
-
   lightboxClose?.addEventListener("click", closeLightbox);
   lightbox?.addEventListener("click", (e) => {
     if (e.target === lightbox) closeLightbox();
@@ -60,16 +73,36 @@
     if (e.key === "Escape") closeLightbox();
   });
 
-  // Basic form guard (honeypot)
+  // Gallery filters
+  const filterBtns = [...document.querySelectorAll("[data-filter]")];
+  const items = [...document.querySelectorAll("[data-gallery-item]")];
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterBtns.forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      const f = btn.getAttribute("data-filter");
+      items.forEach((item) => {
+        const cat = item.getAttribute("data-category");
+        item.classList.toggle("is-hidden", f !== "all" && cat !== f);
+      });
+    });
+  });
+
+  // Forms: honeypot + timing + front-end status (backend/CAPTCHA to wire)
   document.querySelectorAll("form[data-query-form]").forEach((form) => {
+    const started = Date.now();
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const hp = form.querySelector(".hp input");
-      if (hp && hp.value) return;
       const status = form.querySelector("[data-form-status]");
+      if (hp && hp.value) return;
+      if (Date.now() - started < 1200) {
+        if (status) status.textContent = "Please take a moment to complete the form, then try again.";
+        return;
+      }
       if (status) {
         status.textContent =
-          "Thanks — this demo form is front-end only. Wire CAPTCHA/OTP + email delivery before production.";
+          "Received locally. Production will send this to info@robustsolutions.in after CAPTCHA/OTP is configured.";
       }
       form.reset();
     });
