@@ -144,6 +144,13 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.2rem; }
 .mega__foot { margin-top: 0.6rem; padding-top: 0.8rem; border-top: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; }
 .mega__foot a { font-family: var(--fx-display); font-weight: 700; font-size: 0.86rem; }
 
+.drop { position: absolute; top: calc(100% + 0.35rem); left: 0; min-width: 11rem; background: #fff; border: 1px solid var(--line); border-radius: var(--r-sm); box-shadow: var(--shadow-md); padding: 0.25rem 0; opacity: 0; visibility: hidden; z-index: 80; }
+.nav-item:hover .drop, .nav-item:focus-within .drop { opacity: 1; visibility: visible; }
+.drop::before { content: ""; position: absolute; top: -0.35rem; left: 0; right: 0; height: 0.35rem; }
+.drop a { display: block; padding: 0.7rem 1rem; color: var(--ink); font-family: var(--fx-display); font-weight: 600; font-size: 0.88rem; }
+.drop a + a { border-top: 1px solid var(--line-soft); }
+.drop a:hover { background: var(--off); color: var(--blue); }
+
 .header-tools { display: flex; align-items: center; gap: 0.6rem; }
 .header-tools .header-cta { display: inline-flex; padding: 0.55rem 0.95rem; font-size: 0.82rem; box-shadow: none; }
 .header-cta .cta-short { display: inline; }

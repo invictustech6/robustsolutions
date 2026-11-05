@@ -9,6 +9,8 @@
   <url><loc>https://robustsolutions.vercel.app/witness-facility/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://robustsolutions.vercel.app/gallery/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://robustsolutions.vercel.app/careers/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/careers/jobs/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/careers/training/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://robustsolutions.vercel.app/contact/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://robustsolutions.vercel.app/request-a-quote/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://robustsolutions.vercel.app/privacy/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>

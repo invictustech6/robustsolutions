@@ -4,19 +4,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Careers — Jobs & Training | Robust Testing Solutions</title>
-  <meta name="description" content="Explore jobs and industry-ready training at Robust Testing Solutions. Email resumes to info@robustsolutions.in." />
+  <meta name="description" content="Explore jobs and industry-ready training at Robust Testing Solutions." />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <link rel="canonical" href="https://robustsolutions.vercel.app/careers/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Robust Testing Solutions" />
   <meta property="og:title" content="Careers — Jobs & Training | Robust Testing Solutions" />
-  <meta property="og:description" content="Explore jobs and industry-ready training at Robust Testing Solutions. Email resumes to info@robustsolutions.in." />
+  <meta property="og:description" content="Explore jobs and industry-ready training at Robust Testing Solutions." />
   <meta property="og:url" content="https://robustsolutions.vercel.app/careers/" />
   <meta property="og:image" content="https://robustsolutions.vercel.app/assets/images/facility-building.png" />
   <meta property="og:locale" content="en_IN" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Careers — Jobs & Training | Robust Testing Solutions" />
-  <meta name="twitter:description" content="Explore jobs and industry-ready training at Robust Testing Solutions. Email resumes to info@robustsolutions.in." />
+  <meta name="twitter:description" content="Explore jobs and industry-ready training at Robust Testing Solutions." />
   <meta name="twitter:image" content="https://robustsolutions.vercel.app/assets/images/facility-building.png" />
   <meta name="theme-color" content="#103C8C" />
   <link rel="icon" href="../assets/images/favicon.jpg" type="image/jpeg" />
@@ -73,7 +73,13 @@
       </div>
       <div class="nav-item"><a href="../witness-facility/">Witness Facility</a></div>
       <div class="nav-item"><a href="../gallery/">Gallery</a></div>
-      <div class="nav-item"><a href="../careers/" aria-current="page">Careers</a></div>
+      <div class="nav-item">
+        <a href="../careers/" aria-current="page" aria-haspopup="true">Careers <span class="caret"></span></a>
+        <div class="drop" role="menu">
+          <a role="menuitem" href="../careers/jobs/">Jobs</a>
+          <a role="menuitem" href="../careers/training/">Training</a>
+        </div>
+      </div>
       <div class="nav-item"><a href="../contact/">Contact</a></div>
       </nav>
       <div class="header-tools">
@@ -98,6 +104,8 @@
     <a href="../witness-facility/">Witness Facility</a>
     <a href="../gallery/">Gallery</a>
     <a href="../careers/">Careers</a>
+    <a class="sub" href="../careers/jobs/">Jobs</a>
+    <a class="sub" href="../careers/training/">Training</a>
     <a href="../contact/">Contact</a>
     <a class="mobile-cta" href="../request-a-quote/">Request a Quote</a>
     <div class="mobile-contact">
@@ -121,31 +129,22 @@
   <main id="main">
     <section class="page-hero"><div class="container">
       <p class="breadcrumb"><a href="../">Home</a> / <span aria-current="page">Careers</span></p>
-      <h1>Careers &amp; training</h1>
-      <p>Build a career in electro-technical testing — or train to become industry ready.</p>
+      <h1>Careers</h1>
+      <p>Join the laboratory or train to become industry ready — choose Jobs or Training.</p>
     </div></section>
-    <section class="section" id="jobs"><div class="container grid-2">
-      <div class="reveal">
+    <section class="section"><div class="container grid-2">
+      <article class="info-card reveal">
         <p class="eyebrow">Jobs</p>
-        <h2 class="section-title">Join the laboratory</h2>
-        <p>We welcome applications from people interested in electro-technical testing, laboratory operations, and quality. Send your resume and we will be in touch when a suitable role opens.</p>
-        <p><strong>Email resumes to:</strong> <a href="mailto:info@robustsolutions.in">info@robustsolutions.in</a></p>
-      </div>
-      <article class="info-card reveal" data-delay="1">
-        <h3>How to apply</h3>
-        <p>Include the role of interest, relevant lab or QA experience, and willingness to work from Bhiwadi.</p>
-        <a class="btn btn-primary" href="mailto:info@robustsolutions.in?subject=Job%20Application%20-%20Robust%20Testing%20Solutions">Email your resume</a>
+        <h2 class="section-title">Openings at the lab</h2>
+        <p>Applications for electro-technical testing, laboratory operations, and quality roles.</p>
+        <p style="margin-top:1.2rem"><a class="btn btn-primary" href="jobs/">View jobs</a></p>
       </article>
-    </div></section>
-    <section class="section section--soft" id="training"><div class="container split">
-      <div class="reveal">
+      <article class="info-card reveal" data-delay="1">
         <p class="eyebrow">Training</p>
-        <h2 class="section-title">We make individuals <span class="accent">industry ready</span></h2>
-        <p>Classroom and practical pathways built around electro-technical testing practice — so trainees understand methods, documentation, and laboratory discipline before they join the floor.</p>
-        <ul class="list-check"><li>Standards literacy for wires, cables, conductors, conduits</li><li>Sample handling and report discipline</li><li>Safety and impartiality culture</li></ul>
-        <p style="margin-top:1.3rem"><a class="btn btn-outline" href="../contact/">Enquire about training</a></p>
-      </div>
-      <div class="media-frame reveal" data-delay="1"><img src="../assets/images/lab-interior.jpg" width="1200" height="800" alt="Laboratory training environment at Robust Testing Solutions" loading="lazy" /><span class="media-frame__tag">Hands-on training</span></div>
+        <h2 class="section-title">Industry-ready programmes</h2>
+        <p>Classroom and practical pathways around testing methods, documentation, and laboratory discipline.</p>
+        <p style="margin-top:1.2rem"><a class="btn btn-outline" href="training/">View training</a></p>
+      </article>
     </div></section>
   </main>
   <footer class="site-footer">
@@ -178,7 +177,8 @@
           <li><a href="../laboratory-capabilities/">Laboratory Capabilities</a></li>
           <li><a href="../industries/">Industries Served</a></li>
           <li><a href="../witness-facility/">Witness Facility</a></li>
-          <li><a href="../careers/">Careers &amp; Training</a></li>
+          <li><a href="../careers/jobs/">Jobs</a></li>
+          <li><a href="../careers/training/">Training</a></li>
           <li><a href="../gallery/">Gallery</a></li>
         </ul>
       </div>
