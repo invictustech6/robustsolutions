@@ -323,6 +323,33 @@ body.nav-open { overflow: hidden; }
 .cert__frame--img img { max-width: 82%; max-height: 82%; object-fit: contain; }
 .cert .caption { font-weight: 700; font-size: 0.85rem; color: var(--navy); font-family: var(--fx-display); }
 
+/* Homepage certificates — GTL-style document row, Robust credentials only */
+.certs { text-align: center; }
+.certs__kicker { margin: 0 0 0.55rem; color: var(--blue); font-family: var(--fx-display); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
+.certs__title { font-size: clamp(2rem, 4.2vw, 2.85rem); margin: 0 0 2.2rem; max-width: none; }
+.certs-row { display: flex; align-items: center; justify-content: center; gap: 0.35rem; width: 100%; }
+.certs-viewport { overflow: hidden; flex: 1 1 auto; width: 100%; min-width: 0; }
+.certs-track { display: flex; gap: 1.4rem; justify-content: flex-start; transition: transform 0.4s var(--ease); will-change: transform; }
+.certs-card { flex: 0 0 min(220px, 78vw); width: min(220px, 78vw); background: transparent; border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; text-align: center; }
+.certs-card__frame { display: block; aspect-ratio: 3 / 4; background: #fff; border: 1px solid #d5deea; box-shadow: 0 10px 28px rgba(11, 25, 48, 0.08); padding: 0.55rem; }
+.certs-sheet { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.55rem; width: 100%; height: 100%; padding: 0.85rem 0.7rem; border: 1px solid rgba(201, 162, 100, 0.45); background: linear-gradient(180deg, #fff, #f7fafd); }
+.certs-sheet img { width: auto; height: auto; max-width: 72%; max-height: 48%; object-fit: contain; }
+.certs-sheet__kicker { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-deep); font-weight: 700; font-family: var(--fx-display); }
+.certs-sheet__iso { width: 3.4rem; height: 3.4rem; border-radius: 50%; border: 2px solid var(--blue); color: var(--blue); display: grid; place-items: center; font-family: var(--fx-display); font-weight: 800; font-size: 0.82rem; }
+.certs-sheet strong { color: var(--navy); font-family: var(--fx-display); font-size: 0.98rem; line-height: 1.2; }
+.certs-sheet span { color: var(--muted); font-size: 0.78rem; font-weight: 600; }
+.certs-card__label { display: block; margin-top: 0.9rem; color: var(--blue); font-family: var(--fx-display); font-weight: 700; font-size: 0.95rem; }
+.certs-card:hover .certs-card__frame, .certs-card:focus-visible .certs-card__frame { border-color: var(--gold); box-shadow: var(--shadow-md); }
+.certs-nav { width: 2.5rem; height: 2.5rem; border: 0; background: transparent; color: var(--navy); font-size: 2.1rem; line-height: 1; cursor: pointer; border-radius: 50%; display: grid; place-items: center; }
+.certs-nav[hidden] { display: none; }
+.certs-nav:hover { color: var(--blue); background: var(--blue-soft); }
+.certs-dots[hidden] { display: none; }
+.certs-dots { display: flex; justify-content: center; gap: 0.42rem; margin: 1.35rem 0 1.5rem; min-height: 0.5rem; }
+.certs-dots button { width: 0.48rem; height: 0.48rem; border-radius: var(--r-pill); border: 0; background: #c5cdd8; cursor: pointer; padding: 0; }
+.certs-dots button.is-active { background: var(--navy); }
+.certs-foot { margin: 1.35rem auto 1.15rem; color: var(--muted); font-size: 0.92rem; max-width: 40rem; }
+.certs-cta { border-radius: var(--r-pill); min-width: 13rem; }
+
 /* Capability showcase (replaces fake testimonials) */
 .showcase { display: grid; gap: 1.1rem; }
 .showcase-card { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); padding: 1.6rem; position: relative; overflow: hidden; box-shadow: var(--shadow-xs); transition: transform 0.3s var(--ease), box-shadow 0.3s; }
@@ -457,6 +484,7 @@ body.nav-open { overflow: hidden; }
   .grid-certs { grid-template-columns: repeat(5, 1fr); }
   .stat-ribbon { grid-template-columns: repeat(4, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
+  .certs-card { flex-basis: 220px; width: 220px; }
 }
 @media (min-width: 900px) {
   .brand__text { display: block; }
@@ -473,6 +501,7 @@ body.nav-open { overflow: hidden; }
   .split--reverse .media-frame { order: 2; }
   .grid-2, .form-layout, .witness-lanes, .showcase { grid-template-columns: 1fr 1fr; }
   .grid-3, .process { grid-template-columns: repeat(3, 1fr); }
+  .certs-card { flex-basis: 220px; width: 220px; }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1.3fr; align-items: start; }
 }

@@ -142,6 +142,63 @@
     layout(); start();
   }
 
+  /* ---------- Certificates carousel (GTL-style document row) ---------- */
+  const certsRoot = $("[data-certs]");
+  if (certsRoot) {
+    const viewport = $("[data-certs-viewport]", certsRoot);
+    const track = $("[data-certs-track]", certsRoot);
+    const cards = $$(".certs-card", certsRoot);
+    const dotsWrap = $("[data-certs-dots]");
+    const n = cards.length;
+    let index = 0;
+    const gap = () => {
+      const s = window.getComputedStyle(track);
+      return parseFloat(s.columnGap || s.gap) || 22;
+    };
+    const perView = () => {
+      const cardW = cards[0] ? cards[0].getBoundingClientRect().width : 220;
+      const g = gap();
+      return Math.max(1, Math.min(n, Math.floor((viewport.clientWidth + g) / (cardW + g))));
+    };
+    const maxIndex = () => Math.max(0, n - perView());
+    const dots = cards.map((_, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", `Show certificate ${i + 1}`);
+      b.addEventListener("click", () => go(i));
+      dotsWrap?.appendChild(b);
+      return b;
+    });
+    const prevBtn = $("[data-certs-prev]", certsRoot);
+    const nextBtn = $("[data-certs-next]", certsRoot);
+    const go = (i) => { index = Math.max(0, Math.min(i, maxIndex())); layout(); };
+    const layout = () => {
+      index = Math.min(index, maxIndex());
+      const cardW = cards[0] ? cards[0].getBoundingClientRect().width : 0;
+      const g = gap();
+      const used = n * cardW + Math.max(0, n - 1) * g;
+      const origin = Math.max(0, (viewport.clientWidth - used) / 2);
+      track.style.transform = `translateX(${origin - index * (cardW + g)}px)`;
+      dots.forEach((d, i) => d.classList.toggle("is-active", i === index));
+      const sliding = maxIndex() > 0;
+      if (prevBtn) prevBtn.hidden = !sliding;
+      if (nextBtn) nextBtn.hidden = !sliding;
+      if (dotsWrap) dotsWrap.hidden = !sliding;
+    };
+    nextBtn?.addEventListener("click", () => go(index >= maxIndex() ? 0 : index + 1));
+    prevBtn?.addEventListener("click", () => go(index <= 0 ? maxIndex() : index - 1));
+    let startX = null;
+    viewport.addEventListener("touchstart", (e) => (startX = e.touches[0].clientX), { passive: true });
+    viewport.addEventListener("touchend", (e) => {
+      if (startX === null) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) go(index + (dx < 0 ? 1 : -1));
+      startX = null;
+    });
+    window.addEventListener("resize", layout, { passive: true });
+    layout();
+  }
+
   /* ---------- Testimonials carousel ---------- */
   const quotesRoot = $("[data-quotes]");
   if (quotesRoot) {
