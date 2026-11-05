@@ -5,6 +5,7 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
   /* ---------- Sticky header + side rail ---------- */
+  const siteHeader = $(".site-header");
   const header2 = $(".header-2");
   const sideRail = $(".side-rail");
   const onScroll = () => {
@@ -14,6 +15,15 @@
   };
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+
+  // Expose the sticky header height so the mobile menu docks exactly below it,
+  // regardless of how the contact strip wraps on small screens.
+  const setStack = () => {
+    if (siteHeader) document.documentElement.style.setProperty("--stack", siteHeader.offsetHeight + "px");
+  };
+  setStack();
+  window.addEventListener("resize", setStack, { passive: true });
+  window.addEventListener("load", setStack);
 
   /* ---------- Mobile nav ---------- */
   const navToggle = $(".nav-toggle");
@@ -222,25 +232,24 @@
 
       const endpoint = form.getAttribute("data-endpoint");
       const submitBtn = $("button[type=submit]", form);
-      if (!endpoint) {
-        setStatus("Thanks — your details are valid. This demo build has no live backend yet, so nothing was sent. Once email credentials are configured, this form will deliver to info@robustsolutions.in.", "info");
-        return;
-      }
+      const fallback = 'We couldn\'t submit your enquiry online right now. Please email info@robustsolutions.in or call +91 99687 17582 and our team will respond during working hours (Mon–Sat, 9:30 AM–6:30 PM IST).';
+      if (!endpoint) { setStatus(fallback, "info"); return; }
       try {
         submitBtn && (submitBtn.disabled = true);
-        setStatus("Sending…", "info");
+        setStatus("Sending your enquiry…", "info");
         const data = Object.fromEntries(new FormData(form).entries());
         const res = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
         if (res.ok) {
           setStatus("Thank you — your enquiry has been received. Our team will respond during working hours (Mon–Sat, 9:30 AM–6:30 PM IST).", "ok");
           form.reset();
-        } else if ([404, 501, 503].includes(res.status)) {
-          setStatus("Your details are valid, but the enquiry backend isn't configured on this demo deployment yet, so nothing was sent. Once email credentials are set, this form delivers to info@robustsolutions.in.", "info");
+        } else if (res.status === 429) {
+          setStatus("You've sent several enquiries in a short time. Please wait a minute and try again, or email info@robustsolutions.in.", "err");
         } else {
-          setStatus("Something went wrong submitting the form. Please email info@robustsolutions.in directly.", "err");
+          // 404/501/503 (online submission unavailable) or any other non-OK: honest contact fallback, never a success.
+          setStatus(fallback, "info");
         }
       } catch {
-        setStatus("Network error — please email info@robustsolutions.in directly, or try again shortly.", "err");
+        setStatus(fallback, "err");
       } finally {
         submitBtn && (submitBtn.disabled = false);
       }
