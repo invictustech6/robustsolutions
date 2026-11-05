@@ -372,6 +372,40 @@ body.nav-open { overflow: hidden; }
 .quotes__nav:hover { color: var(--gold-deep); background: var(--blue-soft); }
 .quotes__note { margin: 1.4rem 0 0; color: var(--muted); font-size: 0.82rem; }
 
+/* Our Clients — RTRC-style stacked logo cards, Robust sectors only */
+.clients { text-align: center; }
+.clients__title { font-size: clamp(2rem, 4.4vw, 2.75rem); margin: 0 0 1.6rem; max-width: none; color: var(--gold-deep); }
+.clients__title span { color: var(--blue); }
+.client-cards { display: grid; gap: 1.1rem; }
+.client-card {
+  background: #fff;
+  border-radius: 22px;
+  min-height: 11.5rem;
+  padding: 2.1rem 1.6rem 1.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  box-shadow: 0 10px 30px rgba(11, 25, 48, 0.07);
+  border: 1px solid rgba(226, 233, 243, 0.9);
+}
+.client-card__mark {
+  width: 3.4rem; height: 3.4rem; border-radius: 14px;
+  display: grid; place-items: center; margin-bottom: 0.35rem;
+  background: linear-gradient(135deg, var(--blue-soft), #fff);
+  color: var(--blue); font-family: var(--fx-display); font-weight: 800; font-size: 0.92rem;
+  border: 1px solid rgba(16, 60, 140, 0.12);
+}
+.client-card strong { font-family: var(--fx-display); font-size: 1.35rem; color: var(--navy); letter-spacing: -0.02em; }
+.client-card span:last-child { color: var(--muted); font-size: 0.92rem; max-width: 28ch; }
+.clients__note { margin: 1.35rem 0 0; color: var(--muted); font-size: 0.82rem; }
+@media (max-width: 619px) {
+  .client-card { min-height: 9.6rem; padding: 2.4rem 1.2rem; }
+  .client-card span:last-child { display: none; }
+  .client-card strong { font-size: 1.5rem; }
+}
+
 /* Industries */
 .industry-card { display: flex; gap: 1rem; align-items: flex-start; }
 .industry-card .ic { flex-shrink: 0; width: 2.8rem; height: 2.8rem; border-radius: 12px; display: grid; place-items: center; background: linear-gradient(135deg, var(--blue-soft), #fff); color: var(--blue); font-family: var(--fx-display); font-weight: 800; font-size: 0.8rem; border: 1px solid rgba(16,60,140,0.12); }
@@ -499,7 +533,7 @@ body.nav-open { overflow: hidden; }
   .hero__inner { grid-template-columns: 1.05fr 1fr; }
   .split { grid-template-columns: 1.05fr 0.95fr; }
   .split--reverse .media-frame { order: 2; }
-  .grid-2, .form-layout, .witness-lanes, .showcase { grid-template-columns: 1fr 1fr; }
+  .grid-2, .form-layout, .witness-lanes, .showcase, .client-cards { grid-template-columns: 1fr 1fr; }
   .grid-3, .process { grid-template-columns: repeat(3, 1fr); }
   .certs-card { flex-basis: 220px; width: 220px; }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
