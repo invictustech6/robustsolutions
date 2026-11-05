@@ -388,7 +388,7 @@ body.nav-open { overflow: hidden; }
 .site-footer a { color: rgba(255,255,255,0.82); }
 .site-footer a:hover { color: var(--gold-bright); }
 .footer-grid { display: grid; gap: 2rem; }
-.footer-brand img { height: 2.8rem; margin-bottom: 1rem; }
+.footer-brand img { width: 172px; height: auto; background: #fff; padding: 0.5rem 0.75rem; border-radius: 10px; margin-bottom: 1rem; }
 .site-footer h3 { color: #fff; font-size: 1rem; margin-bottom: 1rem; }
 .site-footer ul { list-style: none; padding: 0; margin: 0; }
 .site-footer li + li { margin-top: 0.5rem; }
