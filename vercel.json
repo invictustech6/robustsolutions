@@ -1,0 +1,29 @@
+{
+  "redirects": [
+    { "source": "/about-us", "destination": "/about/", "permanent": true },
+    { "source": "/about-us/", "destination": "/about/", "permanent": true },
+    { "source": "/contact-us", "destination": "/contact/", "permanent": true },
+    { "source": "/contact-us/", "destination": "/contact/", "permanent": true },
+    { "source": "/contact", "destination": "/contact/", "permanent": true },
+    { "source": "/book-a-test", "destination": "/request-a-quote/", "permanent": true },
+    { "source": "/book-a-test/", "destination": "/request-a-quote/", "permanent": true },
+    { "source": "/quote", "destination": "/request-a-quote/", "permanent": false },
+    { "source": "/quote/", "destination": "/request-a-quote/", "permanent": false },
+    { "source": "/testing-facilities-as-per-indian-standards-for-cables-and-conductors", "destination": "/services/indian-standards/", "permanent": true },
+    { "source": "/testing-facilities-as-per-indian-standards-for-cables-and-conductors/", "destination": "/services/indian-standards/", "permanent": true },
+    { "source": "/testing-facilities-as-per-iec-standards-for-cables-and-conductors", "destination": "/services/iec-standards/", "permanent": true },
+    { "source": "/testing-facilities-as-per-iec-standards-for-cables-and-conductors/", "destination": "/services/iec-standards/", "permanent": true },
+    { "source": "/testing-facilities-as-per-bsi-standards-for-cables-and-conductors", "destination": "/services/bsi-standards/", "permanent": true },
+    { "source": "/testing-facilities-as-per-bsi-standards-for-cables-and-conductors/", "destination": "/services/bsi-standards/", "permanent": true },
+    { "source": "/testing-facilities-for-solar-d-c-cables", "destination": "/services/solar-dc-cables/", "permanent": true },
+    { "source": "/testing-facilities-for-solar-d-c-cables/", "destination": "/services/solar-dc-cables/", "permanent": true },
+    { "source": "/testing-facilities-for-fire-survival-cables", "destination": "/services/fire-survival-cables/", "permanent": true },
+    { "source": "/testing-facilities-for-fire-survival-cables/", "destination": "/services/fire-survival-cables/", "permanent": true },
+    { "source": "/testing-facilities-for-electric-vehicle-charging-cables", "destination": "/services/ev-charging-cables/", "permanent": true },
+    { "source": "/testing-facilities-for-electric-vehicle-charging-cables/", "destination": "/services/ev-charging-cables/", "permanent": true },
+    { "source": "/anabolicos-legal-13", "destination": "/410.html", "permanent": false },
+    { "source": "/anabolicos-legal-13/", "destination": "/410.html", "permanent": false },
+    { "source": "/client2", "destination": "/410.html", "permanent": false },
+    { "source": "/client2/", "destination": "/410.html", "permanent": false }
+  ]
+}
