@@ -50,7 +50,7 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0; font-family: var(--fx-body); color: var(--ink);
   background: var(--white); line-height: 1.65; min-height: 100vh;
-  text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; overflow-x: clip; padding-top: var(--stack, 7.2rem);
 }
 img { max-width: 100%; height: auto; display: block; }
 a { color: var(--blue); text-decoration: none; transition: color 0.2s var(--ease); }
@@ -89,7 +89,7 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.2rem; }
 /* ============================================================ Sticky header stack
    Header-1 (contact strip) + Header-2 (brand/nav) move together inside one sticky
    wrapper, so the strip can never overlap the nav/hamburger regardless of wrapping. */
-.site-header { position: sticky; top: 0; z-index: 70; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 70; background: #fff; }
 
 /* ============================================================ Header 1 */
 .header-1 { display: block; overflow-x: hidden; background: linear-gradient(90deg, var(--navy), var(--blue) 70%, var(--blue-600)); color: #fff; font-size: 0.84rem; }
@@ -99,7 +99,6 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.2rem; }
 .header-1__inner { width: min(100% - 1.4rem, var(--max-wide)); margin-inline: auto; display: flex; flex-wrap: nowrap; gap: 0.3rem 1.1rem; justify-content: flex-start; align-items: center; padding: 0.42rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .header-1__inner::-webkit-scrollbar { display: none; }
 .header-1__contacts { display: flex; flex-wrap: nowrap; gap: 0.3rem 1.1rem; align-items: center; flex: 0 0 auto; }
-.site-header.is-compact .header-1 { display: none; }
 .header-1__item { display: inline-flex; align-items: center; gap: 0.45rem; white-space: nowrap; opacity: 0.94; }
 .header-1__item .ico { width: 14px; height: 14px; color: var(--gold-bright); flex-shrink: 0; opacity: 1; }
 .social a .ico { width: 16px; height: 16px; }
@@ -112,7 +111,7 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.2rem; }
 .chip-cta:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(201,162,100,0.42); }
 
 /* ============================================================ Header 2 */
-.header-2 { position: relative; z-index: 60; background: rgba(255,255,255,0.92); backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px); border-bottom: 1px solid var(--line-soft); transition: box-shadow 0.35s var(--ease), border-color 0.35s, background 0.35s; }
+.header-2 { position: relative; z-index: 60; background: #fff; border-bottom: 1px solid var(--line-soft); transition: box-shadow 0.35s var(--ease), border-color 0.35s; }
 .header-2.is-scrolled { box-shadow: var(--shadow-sm); border-bottom-color: var(--line-soft); background: rgba(255,255,255,0.95); }
 .header-2__inner { width: min(100% - 1.4rem, var(--max-wide)); margin-inline: auto; min-height: var(--header2); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .brand { display: flex; align-items: center; gap: 0.8rem; color: inherit; min-width: 0; }
