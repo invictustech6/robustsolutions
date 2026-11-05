@@ -230,7 +230,31 @@
   /* ---------- Forms: validation + honest status (no fake success) ---------- */
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const telRe = /^[+\d][\d\s\-()]{6,}$/;
-  $$("form[data-query-form]").forEach((form) => {
+  (async () => {
+    let turnstileSiteKey = "";
+    try {
+      const cfgRes = await fetch("/api/form-config", { headers: { Accept: "application/json" } });
+      if (cfgRes.ok) {
+        const cfg = await cfgRes.json();
+        turnstileSiteKey = cfg.turnstileSiteKey || "";
+      }
+    } catch { /* local file or API unavailable */ }
+    if (turnstileSiteKey) {
+      await new Promise((resolve, reject) => {
+        const s = document.createElement("script");
+        s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+        s.async = true;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      }).catch(() => {});
+    }
+    const widgetIds = new WeakMap();
+    $$("form[data-query-form]").forEach((form) => {
+      const slot = $("[data-turnstile]", form);
+      if (slot && turnstileSiteKey && window.turnstile) {
+        widgetIds.set(form, window.turnstile.render(slot, { sitekey: turnstileSiteKey, theme: "light" }));
+      }
     const started = Date.now();
     const status = $("[data-form-status]", form);
     const setStatus = (msg, kind) => {
@@ -276,12 +300,23 @@
         submitBtn && (submitBtn.disabled = true);
         setStatus("Sending your enquiry…", "info");
         const data = Object.fromEntries(new FormData(form).entries());
+        const widgetId = widgetIds.get(form);
+        if (turnstileSiteKey) {
+          const token = window.turnstile && widgetId != null ? window.turnstile.getResponse(widgetId) : "";
+          if (!token) {
+            setStatus("Please complete the verification and submit again.", "err");
+            return;
+          }
+          data.turnstileToken = token;
+        }
         const res = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
         if (res.ok) {
           setStatus("Thank you — your enquiry has been received. Our team will respond during working hours (Mon–Sat, 9:30 AM–6:30 PM IST).", "ok");
           form.reset();
         } else if (res.status === 429) {
           setStatus("You've sent several enquiries in a short time. Please wait a minute and try again, or email info@robustsolutions.in.", "err");
+        } else if (res.status === 403) {
+          setStatus("Verification failed. Please try again.", "err");
         } else {
           // 404/501/503 (online submission unavailable) or any other non-OK: honest contact fallback, never a success.
           setStatus(fallback, "info");
@@ -290,9 +325,12 @@
         setStatus(fallback, "err");
       } finally {
         submitBtn && (submitBtn.disabled = false);
+        const widgetId = widgetIds.get(form);
+        if (widgetId != null && window.turnstile) window.turnstile.reset(widgetId);
       }
     });
   });
+  })();
 
   /* ---------- Year ---------- */
   $$("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));

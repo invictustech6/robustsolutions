@@ -48,6 +48,24 @@ export function validate(data, required) {
   return errors;
 }
 
+const HIDDEN_FIELDS = new Set(["website", "turnstileToken", "cf-turnstile-response"]);
+
+export async function verifyTurnstile(token, ip) {
+  const secret = process.env.TURNSTILE_SECRET;
+  if (!secret) return "not_configured";
+  if (!token) return "missing";
+  const body = new URLSearchParams({ secret, response: String(token) });
+  if (ip && ip !== "unknown") body.set("remoteip", ip);
+  const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body,
+  });
+  if (!res.ok) return "failed";
+  const data = await res.json();
+  return data.success ? "ok" : "failed";
+}
+
 function esc(s) {
   return String(s || "").replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]));
 }
@@ -62,7 +80,7 @@ export async function deliver(subject, data) {
   if (!apiKey || !from) return "not_configured";
 
   const rows = Object.entries(data)
-    .filter(([k]) => !["website"].includes(k))
+    .filter(([k]) => !HIDDEN_FIELDS.has(k))
     .map(([k, v]) => `<tr><td style="padding:4px 10px;font-weight:600">${esc(k)}</td><td style="padding:4px 10px">${esc(v)}</td></tr>`)
     .join("");
 

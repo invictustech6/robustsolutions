@@ -397,7 +397,7 @@ body.nav-open { overflow: hidden; }
 .form-status.is-ok { background: #eaf6ee; color: #1d6b38; border: 1px solid #bfe3c9; }
 .form-status.is-info { background: var(--blue-soft); color: var(--blue); border: 1px solid #cfe0f7; }
 .form-status.is-err { background: #fbeaea; color: #b23636; border: 1px solid #f0cccc; }
-.captcha-slot { border: 1px dashed var(--line); border-radius: var(--r-sm); padding: 0.85rem; background: var(--off); color: var(--muted); font-size: 0.84rem; margin-bottom: 1rem; }
+.turnstile { margin: 0 0 1rem; min-height: 0; }
 .map-embed { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; min-height: 240px; background: var(--blue-soft); box-shadow: var(--shadow-xs); }
 .map-embed iframe { width: 100%; height: 300px; border: 0; display: block; }
 .map-fallback { min-height: 240px; display: grid; place-items: center; padding: 1.5rem; text-align: center; }

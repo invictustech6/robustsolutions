@@ -1,4 +1,4 @@
-import { readJson, validate, deliver, rateLimited, clientIp } from "./_lib.js";
+import { readJson, validate, deliver, rateLimited, clientIp, verifyTurnstile } from "./_lib.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -11,6 +11,10 @@ export default async function handler(req, res) {
 
   const data = await readJson(req);
   if (data.website) return res.status(200).json({ ok: true }); // honeypot: pretend success, drop
+  const captcha = await verifyTurnstile(data.turnstileToken, clientIp(req));
+  if (captcha === "missing" || captcha === "failed") {
+    return res.status(403).json({ ok: false, error: "captcha_failed" });
+  }
 
   const errors = validate(data, ["name", "email", "phone", "message"]);
   if (Object.keys(errors).length) {
