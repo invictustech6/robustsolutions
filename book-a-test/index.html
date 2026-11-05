@@ -20,44 +20,15 @@
   <meta name="twitter:image" content="https://robustsolutions.in/assets/images/facility-building.png" />
   <meta name="theme-color" content="#103C8C" />
   <link rel="icon" href="../assets/images/favicon.jpg" type="image/jpeg" />
+  <link rel="apple-touch-icon" href="../assets/images/robust-logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Manrope:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/styles.css" />
-  
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [{
-    "@type": ["Organization", "LocalBusiness"],
-    "@id": "https://robustsolutions.in/#organization",
-    "name": "Robust Testing Solutions",
-    "url": "https://robustsolutions.in/",
-    "logo": "https://robustsolutions.in/assets/images/robust-logo.png",
-    "image": "https://robustsolutions.in/assets/images/facility-building.png",
-    "email": "info@robustsolutions.in",
-    "telephone": ["+91-9968717582", "+91-9958653555"],
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "H1-958, RIICO Industrial Area Chopanki",
-      "addressLocality": "Bhiwadi",
-      "addressRegion": "Rajasthan",
-      "postalCode": "301019",
-      "addressCountry": "IN"
-    },
-    "geo": {"@type": "GeoCoordinates", "latitude": 28.2089, "longitude": 76.8606},
-    "openingHoursSpecification": [{
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-      "opens": "09:30",
-      "closes": "18:30"
-    }],
-    "areaServed": "IN",
-    "sameAs": ["https://wa.me/918800629906"]
-  }]
-}
+  <noscript><style>.reveal{opacity:1!important;transform:none!important}.cf-card{position:relative!important;display:inline-block}</style></noscript>
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":["Organization","LocalBusiness"],"@id":"https://robustsolutions.in/#organization","name":"Robust Testing Solutions","url":"https://robustsolutions.in/","logo":"https://robustsolutions.in/assets/images/robust-logo.png","image":"https://robustsolutions.in/assets/images/facility-building.png","email":"info@robustsolutions.in","telephone":["+91-9968717582","+91-9958653555"],"address":{"@type":"PostalAddress","streetAddress":"H1-958, RIICO Industrial Area Chopanki","addressLocality":"Bhiwadi","addressRegion":"Rajasthan","postalCode":"301019","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":28.2089,"longitude":76.8606},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:30","closes":"18:30"}],"areaServed":"IN","sameAs":["https://wa.me/918800629906"],"identifier":[{"@type":"PropertyValue","name":"NABL","value":"TC-10626"}]}]}
 </script>
-
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://robustsolutions.in/"},{"@type":"ListItem","position":2,"name":"Book a Test","item":"https://robustsolutions.in/book-a-test/"}]}</script>
 </head>
 <body>
@@ -137,15 +108,9 @@
       <p>Primary conversion path for sample booking, quotes, and witness requests.</p>
     </div></section>
     <section class="section"><div class="container" style="max-width:720px">
-      <form class="form" data-query-form>
+      <form class="form reveal" data-query-form>
         <h2>Booking details</h2>
-        <div class="field"><label for="intent">Intent</label>
-          <select id="intent" name="intent">
-            <option value="test">Book a Test</option>
-            <option value="quote">Request a Quote</option>
-            <option value="witness">Witness required</option>
-          </select>
-        </div>
+        <div class="field"><label for="intent">Intent</label><select id="intent" name="intent"><option value="test">Book a Test</option><option value="quote">Request a Quote</option><option value="witness">Witness required</option></select></div>
         <div class="field"><label for="name2">Name</label><input id="name2" name="name" required autocomplete="name" /></div>
         <div class="field"><label for="mobile2">Mobile</label><input id="mobile2" name="mobile" type="tel" required autocomplete="tel" /></div>
         <div class="field"><label for="email2">Email</label><input id="email2" name="email" type="email" required autocomplete="email" /></div>
@@ -163,8 +128,9 @@
     <div class="container footer-grid">
       <div>
         <h3>Robust Testing Solutions</h3>
-        <p>Independent third-party electro-technical testing laboratory for wires, cables, conductors, and conduits based in Bhiwadi, Rajasthan.</p>
+        <p>Independent third-party electro-technical testing laboratory for wires, cables, conductors, and conduits — based in Bhiwadi, Rajasthan.</p>
         <p><strong>Hours:</strong> Mon-Sat 9:30 AM - 6:30 PM · Sunday OFF</p>
+        <p style="margin-top:0.75rem"><span class="trust-pill" style="color:#fff">NABL TC-10626</span></p>
       </div>
       <div>
         <h3>Explore</h3>
@@ -199,7 +165,6 @@
       <div data-lightbox-body></div>
     </div>
   </div>
-  <script>document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date().getFullYear());</script>
   <script src="../js/main.js" defer></script>
 </body>
 </html>
