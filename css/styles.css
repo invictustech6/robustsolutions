@@ -114,11 +114,8 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.2rem; }
 .header-2 { position: relative; z-index: 60; background: #fff; border-bottom: 1px solid var(--line-soft); transition: box-shadow 0.35s var(--ease), border-color 0.35s; }
 .header-2.is-scrolled { box-shadow: var(--shadow-sm); border-bottom-color: var(--line-soft); background: rgba(255,255,255,0.95); }
 .header-2__inner { width: min(100% - 1.4rem, var(--max-wide)); margin-inline: auto; min-height: var(--header2); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.brand { display: flex; align-items: center; gap: 0.8rem; color: inherit; min-width: 0; }
+.brand { display: flex; align-items: center; color: inherit; min-width: 0; }
 .brand img { height: clamp(2.6rem, 5vw, 3.3rem); width: auto; }
-.brand__text { display: none; }
-.brand__name { display: block; font-family: var(--fx-display); font-weight: 800; font-size: 1.02rem; color: var(--blue); line-height: 1.1; letter-spacing: -0.02em; }
-.brand__tag { display: block; font-size: 0.7rem; color: var(--muted); }
 
 .nav { display: none; align-items: center; gap: 0.1rem; }
 .nav-item { position: relative; }
@@ -521,7 +518,6 @@ body.nav-open { overflow: hidden; }
   .certs-card { flex-basis: 220px; width: 220px; }
 }
 @media (min-width: 900px) {
-  .brand__text { display: block; }
   .nav { display: flex; }
   .header-1__inner { justify-content: center; overflow: visible; flex-wrap: wrap; }
   .header-1__contacts { flex-wrap: wrap; }
