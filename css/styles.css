@@ -179,6 +179,8 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.2rem; }
 .mega--tax { width: min(72rem, calc(100vw - 2.4rem)); padding: 0.85rem 1.25rem 1rem; }
 .mega__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.15rem 1.5rem; }
 .mega__col { min-width: 0; }
+.mega__photo { display: block; margin: 0 0 0.55rem; border-radius: 10px; overflow: hidden; background: var(--off); }
+.mega__photo img { width: 100%; height: 5.4rem; object-fit: cover; display: block; }
 .mega__head { display: block; font-family: var(--fx-display); font-weight: 800; color: var(--navy); font-size: 0.95rem; padding: 0.15rem 0.35rem 0.55rem; margin-bottom: 0.2rem; border-bottom: 1px solid var(--line-soft); }
 .mega__head:hover { color: var(--blue); }
 .mega__col a:not(.mega__head) { display: block; padding: 0.38rem 0.35rem; color: var(--ink); font-size: 0.86rem; font-weight: 600; border-radius: 8px; font-family: var(--fx-display); }
@@ -347,7 +349,8 @@ body.nav-open { overflow: hidden; }
 .scope-chip span { color: var(--muted); font-size: 0.88rem; }
 
 /* Grid helpers */
-.grid-2, .grid-3, .grid-4, .grid-certs { display: grid; gap: 1.2rem; }
+.grid-2, .grid-3, .grid-4, .grid-certs, .grid-families { display: grid; gap: 1.2rem; }
+.grid-families { grid-template-columns: 1fr; }
 
 /* Service cards */
 .tilt { transition: transform 0.3s var(--ease), box-shadow 0.3s; }
@@ -593,7 +596,7 @@ body.nav-open { overflow: hidden; }
 /* ============================================================ Responsive */
 @media (min-width: 620px) {
   .field-row { grid-template-columns: 1fr 1fr; }
-  .scope-spectrum { grid-template-columns: repeat(4, 1fr); }
+  .scope-spectrum { grid-template-columns: repeat(3, 1fr); }
   .grid-certs { grid-template-columns: repeat(5, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .logo-slot { flex-basis: 168px; width: 168px; }
@@ -628,16 +631,21 @@ body.nav-open { overflow: hidden; }
   .grid-2, .form-layout, .witness-lanes, .showcase { grid-template-columns: 1fr 1fr; }
   .grid-3, .process { grid-template-columns: repeat(3, 1fr); }
   .certs-card { flex-basis: 220px; width: 220px; }
-  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-4, .grid-families { grid-template-columns: repeat(2, 1fr); }
+  .scope-spectrum { grid-template-columns: repeat(5, 1fr); }
+  .mega__cols { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1.3fr; align-items: start; }
 }
 @media (min-width: 1100px) {
-  .mega__cols { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .mega--tax { width: min(86rem, calc(100vw - 1.6rem)); }
+  .mega__cols { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .mega__photo img { height: 4.8rem; }
   .header-2__inner { gap: 1.25rem; }
   .nav { gap: 1.25rem; }
   .nav-item > a { font-size: 0.92rem; }
   .header-tools .header-cta { padding: 0.82rem 1.4rem; font-size: 0.95rem; }
   .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .grid-families { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .process { grid-template-columns: repeat(5, 1fr); }
 }
 /* After scroll on wide screens: hide the top nav; only the side names remain. */
