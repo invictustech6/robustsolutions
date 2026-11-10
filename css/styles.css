@@ -113,14 +113,14 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.2rem; }
 /* ============================================================ Header 2 */
 .header-2 { position: relative; z-index: 60; background: #fff; border-bottom: 1px solid var(--line-soft); transition: box-shadow 0.35s var(--ease), border-color 0.35s; }
 .header-2.is-scrolled { box-shadow: var(--shadow-sm); border-bottom-color: var(--line-soft); background: rgba(255,255,255,0.95); }
-.header-2__inner { width: min(100% - 1.4rem, var(--max-wide)); margin-inline: auto; min-height: var(--header2); display: flex; align-items: center; justify-content: space-between; gap: 1.75rem; }
+.header-2__inner { width: min(100% - 1.4rem, var(--max-wide)); margin-inline: auto; min-height: var(--header2); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .brand { display: flex; align-items: center; color: inherit; min-width: 0; flex: 0 0 auto; }
-.brand img { height: clamp(2.6rem, 5vw, 3.3rem); width: auto; }
+.brand img { height: clamp(2.6rem, 5vw, 3.3rem); width: auto; display: block; }
 
-.nav { display: none; align-items: center; gap: 0.15rem; min-width: 0; }
+.nav { display: none; align-items: center; min-width: 0; }
 .nav-item { position: relative; }
 .nav-item > a { display: inline-flex; align-items: center; gap: 0.3rem; position: relative; color: var(--ink); font-weight: 600; font-size: 0.9rem; padding: 0.5rem 0.7rem; border-radius: 8px; white-space: nowrap; font-family: var(--fx-display); }
-.nav-item > a::after { content: ""; position: absolute; left: 0.7rem; right: 0.7rem; bottom: 0.28rem; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); transform: scaleX(0); transform-origin: left; transition: transform 0.25s var(--ease); border-radius: 2px; }
+.nav-item > a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0.18rem; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); transform: scaleX(0); transform-origin: center; transition: transform 0.25s var(--ease); border-radius: 2px; }
 .nav-item > a:hover { color: var(--blue); background: var(--off); }
 .nav-item > a:hover::after, .nav-item > a[aria-current="page"]::after { transform: scaleX(1); }
 .nav-item > a[aria-current="page"] { color: var(--blue); }
@@ -505,9 +505,19 @@ body.nav-open { overflow: hidden; }
   .certs-card { flex-basis: 220px; width: 220px; }
 }
 @media (min-width: 900px) {
-  .header-2__inner { gap: 0.9rem; }
-  .nav { display: flex; flex: 1 1 auto; justify-content: space-between; }
-  .nav-item > a { padding: 0.5rem 0.38rem; font-size: 0.82rem; }
+  .header-2__inner {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0;
+    column-gap: 1.5rem;
+  }
+  .brand { justify-self: start; }
+  .header-tools { justify-self: end; }
+  .nav { display: flex; width: 100%; justify-content: flex-start; align-items: center; gap: 0; }
+  .nav > .nav-item { flex: 1 1 auto; display: flex; justify-content: center; min-width: 0; }
+  .nav-item > a { padding: 0.45rem 0.15rem; font-size: 0.82rem; border-radius: 0; }
+  .nav-item > a:hover { background: transparent; }
   .header-1__inner { justify-content: center; overflow: visible; flex-wrap: wrap; }
   .header-1__contacts { flex-wrap: wrap; }
   .header-tools .header-cta { display: inline-flex; padding: 0.7rem 1.05rem; font-size: 0.86rem; box-shadow: 0 10px 24px rgba(16,60,140,0.28); }
@@ -526,15 +536,15 @@ body.nav-open { overflow: hidden; }
   .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1.3fr; align-items: start; }
 }
 @media (min-width: 1100px) {
-  .header-2__inner { gap: 1.75rem; }
-  .nav { justify-content: space-evenly; }
-  .nav-item > a { padding: 0.5rem 0.55rem; font-size: 0.9rem; }
+  .header-2__inner { column-gap: 2rem; }
+  .nav-item > a { font-size: 0.92rem; }
   .header-tools .header-cta { padding: 0.82rem 1.4rem; font-size: 0.95rem; }
   .grid-4 { grid-template-columns: repeat(4, 1fr); }
   .process { grid-template-columns: repeat(5, 1fr); }
 }
 /* After scroll on wide screens: hide the top nav; only the side names remain. */
 @media (min-width: 1440px) {
+  .site-header.is-compact .header-2__inner { display: flex; justify-content: space-between; column-gap: 0; }
   .site-header.is-compact .nav { display: none; }
   .side-rail { display: flex; position: fixed; left: 0.7rem; top: 50%; transform: translateY(-50%); z-index: 40; flex-direction: column; align-items: flex-start; gap: 0.55rem; opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease); }
   .side-rail.is-visible { opacity: 1; pointer-events: auto; }
