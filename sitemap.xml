@@ -13,10 +13,23 @@
   <url><loc>https://robustsolutions.vercel.app/contact/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://robustsolutions.vercel.app/request-a-quote/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://robustsolutions.vercel.app/privacy/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://robustsolutions.vercel.app/services/indian-standards/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://robustsolutions.vercel.app/services/iec-standards/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://robustsolutions.vercel.app/services/bsi-standards/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://robustsolutions.vercel.app/services/solar-dc-cables/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://robustsolutions.vercel.app/services/fire-survival-cables/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://robustsolutions.vercel.app/services/ev-charging-cables/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/cable-testing/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/cable-testing/fire-survival-cables/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/cable-testing/halogen-free-cables/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/cable-testing/solar-cables/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/cable-testing/ev-charging-cables/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/cable-testing/automobile-cables/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/cable-testing/power-cables/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/cable-testing/control-cables/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/conductor-testing/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/conductor-testing/covered-conductors/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/conductor-testing/bare-conductors/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/transformer-testing/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/transformer-testing/distribution-transformers/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/transformer-testing/dry-type-transformers/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/insulator-testing/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/insulator-testing/rubber-mats/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/insulator-testing/polymer-pin-insulators/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/insulator-testing/disk-insulators/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://robustsolutions.vercel.app/services/insulator-testing/ceramic-insulators/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
