@@ -127,11 +127,56 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.2rem; }
 .nav-item .caret { width: 0.6rem; height: 0.6rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translateY(-2px); opacity: 0.7; transition: transform 0.2s var(--ease); }
 .nav-item:hover .caret, .nav-item:focus-within .caret { transform: rotate(-135deg) translateY(-1px); }
 
-/* Mega menu */
-.mega { position: absolute; top: calc(100% + 0.5rem); left: 50%; transform: translateX(-50%) translateY(10px); width: min(42rem, 90vw); background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); padding: 1.1rem; opacity: 0; visibility: hidden; transition: opacity 0.25s var(--ease), transform 0.25s var(--ease); z-index: 80; }
-.nav-item:hover .mega, .nav-item:focus-within .mega { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-.mega::before { content: ""; position: absolute; top: -0.5rem; left: 0; right: 0; height: 0.5rem; }
-.mega--tax { width: min(72rem, calc(100vw - 2.4rem)); padding: 1.25rem 1.25rem 1rem; }
+/* Mega menu — hang flush under the bar; padding-top + ::before are the hover bridge */
+.mega {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(42rem, 90vw);
+  padding: 0.85rem 1.1rem 1.1rem;
+  background: #fff;
+  background-clip: content-box;
+  border: 0;
+  border-radius: var(--r-lg);
+  box-shadow: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s var(--ease), visibility 0s linear 0.22s, pointer-events 0s linear 0.22s;
+  z-index: 80;
+}
+.nav-item:hover .mega,
+.nav-item:focus-within .mega {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+.mega::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 1.35rem;
+  pointer-events: auto;
+}
+.mega::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0.85rem;
+  bottom: 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: -1;
+  pointer-events: none;
+}
+.mega--tax { width: min(72rem, calc(100vw - 2.4rem)); padding: 0.85rem 1.25rem 1rem; }
 .mega__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.15rem 1.5rem; }
 .mega__col { min-width: 0; }
 .mega__head { display: block; font-family: var(--fx-display); font-weight: 800; color: var(--navy); font-size: 0.95rem; padding: 0.15rem 0.35rem 0.55rem; margin-bottom: 0.2rem; border-bottom: 1px solid var(--line-soft); }
@@ -145,9 +190,53 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.2rem; }
 .media-frame--slot { background: var(--off); }
 .info-card .media-frame { margin-bottom: 1.1rem; }
 
-.drop { position: absolute; top: calc(100% + 0.35rem); left: 0; min-width: 11rem; background: #fff; border: 1px solid var(--line); border-radius: var(--r-sm); box-shadow: var(--shadow-md); padding: 0.25rem 0; opacity: 0; visibility: hidden; z-index: 80; }
-.nav-item:hover .drop, .nav-item:focus-within .drop { opacity: 1; visibility: visible; }
-.drop::before { content: ""; position: absolute; top: -0.35rem; left: 0; right: 0; height: 0.35rem; }
+.drop {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 11rem;
+  background: #fff;
+  background-clip: content-box;
+  border: 0;
+  border-radius: var(--r-sm);
+  box-shadow: none;
+  padding: 0.55rem 0 0.25rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s var(--ease), visibility 0s linear 0.22s, pointer-events 0s linear 0.22s;
+  z-index: 80;
+}
+.nav-item:hover .drop,
+.nav-item:focus-within .drop {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+.drop::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 1.35rem;
+  pointer-events: auto;
+}
+.drop::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0.55rem;
+  bottom: 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-md);
+  z-index: -1;
+  pointer-events: none;
+}
 .drop a { display: block; padding: 0.7rem 1rem; color: var(--ink); font-family: var(--fx-display); font-weight: 600; font-size: 0.88rem; }
 .drop a + a { border-top: 1px solid var(--line-soft); }
 .drop a:hover { background: var(--off); color: var(--blue); }
@@ -512,16 +601,18 @@ body.nav-open { overflow: hidden; }
 }
 @media (min-width: 900px) {
   .nav-item:has(.mega) { position: static; }
+  .header-2,
+  .site-header { overflow: visible; }
   .header-2__inner {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     gap: 1.1rem;
   }
-  .brand, .header-tools { flex: 0 0 auto; }
-  .nav { display: flex; flex: 0 0 auto; width: auto; justify-content: flex-start; align-items: center; gap: 1.1rem; }
-  .nav > .nav-item { flex: 0 0 auto; display: block; }
-  .nav-item > a { padding: 0.45rem 0; font-size: 0.82rem; border-radius: 0; }
+  .brand, .header-tools { flex: 0 0 auto; align-self: center; }
+  .nav { display: flex; flex: 0 0 auto; width: auto; justify-content: flex-start; align-items: stretch; align-self: stretch; gap: 1.1rem; }
+  .nav > .nav-item { flex: 0 0 auto; display: flex; align-items: center; }
+  .nav-item > a { padding: 0.45rem 0; font-size: 0.82rem; border-radius: 0; height: 100%; }
   .nav-item > a:hover { background: transparent; }
   .header-1__inner { justify-content: center; overflow: visible; flex-wrap: wrap; }
   .header-1__contacts { flex-wrap: wrap; }
@@ -565,4 +656,8 @@ body.nav-open { overflow: hidden; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .reveal { opacity: 1 !important; transform: none !important; }
   .hero-slide { transition: none !important; }
+  /* Keep a short close-delay so the hover bridge still works without motion. */
+  .mega, .drop { transition-duration: 0.01ms, 0.2s, 0.2s !important; }
+  .nav-item:is(:hover, :focus-within) .mega,
+  .nav-item:is(:hover, :focus-within) .drop { transition-duration: 0.01ms !important; }
 }
