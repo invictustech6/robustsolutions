@@ -79,67 +79,91 @@
     reveals.forEach((el) => io.observe(el));
   }
 
-  /* ---------- Coverflow carousel (toned-down 3D) ---------- */
-  const stage = $(".coverflow__stage");
-  if (stage) {
-    const cards = $$(".cf-card", stage);
-    const dotsWrap = $("[data-cf-dots]");
-    const n = cards.length;
+  /* ---------- Hero fade carousel ---------- */
+  const hero = $(".hero--fade");
+  if (hero) {
+    const slides = $$(".hero-slide", hero);
+    const dotsWrap = $("[data-hero-dots]", hero);
+    const n = slides.length;
     let current = 0;
     let timer;
-
-    const dots = cards.map((_, i) => {
+    const dots = slides.map((slide, i) => {
       const b = document.createElement("button");
       b.type = "button";
       b.setAttribute("aria-label", `Show slide ${i + 1}`);
       b.addEventListener("click", () => { go(i); restart(); });
       dotsWrap?.appendChild(b);
+      if (i !== 0) slide.setAttribute("aria-hidden", "true");
       return b;
     });
-
-    const layout = () => {
-      cards.forEach((card, i) => {
-        let offset = i - current;
-        if (offset > n / 2) offset -= n;
-        if (offset < -n / 2) offset += n;
-        const abs = Math.abs(offset);
-        // Gentle depth: small rotation + modest push-back
-        const translateX = offset * 50;
-        const rotateY = offset * -16;
-        const translateZ = -abs * 70;
-        const scale = offset === 0 ? 1 : 0.88;
-        const opacity = abs > 2 ? 0 : offset === 0 ? 1 : 0.6;
-        card.style.transform = `translateX(${translateX}%) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
-        card.style.opacity = String(opacity);
-        card.style.zIndex = String(50 - abs);
-        card.style.pointerEvents = offset === 0 ? "auto" : "none";
-        card.setAttribute("aria-hidden", offset === 0 ? "false" : "true");
+    const go = (i) => {
+      current = (i + n) % n;
+      slides.forEach((s, idx) => {
+        s.classList.toggle("is-active", idx === current);
+        s.setAttribute("aria-hidden", idx === current ? "false" : "true");
       });
-      dots.forEach((d, i) => d.classList.toggle("is-active", i === current));
+      dots.forEach((d, idx) => d.classList.toggle("is-active", idx === current));
     };
-    const go = (i) => { current = (i + n) % n; layout(); };
     const next = () => go(current + 1);
     const prev = () => go(current - 1);
-
-    $("[data-cf-next]")?.addEventListener("click", () => { next(); restart(); });
-    $("[data-cf-prev]")?.addEventListener("click", () => { prev(); restart(); });
-    cards.forEach((card, i) => card.addEventListener("click", () => { if (i !== current) { go(i); restart(); } }));
-
+    $("[data-hero-next]", hero)?.addEventListener("click", () => { next(); restart(); });
+    $("[data-hero-prev]", hero)?.addEventListener("click", () => { prev(); restart(); });
     const start = () => { if (!prefersReduced && n > 1) timer = window.setInterval(next, 5500); };
     const restart = () => { window.clearInterval(timer); start(); };
-    const cf = $(".coverflow");
-    cf?.addEventListener("mouseenter", () => window.clearInterval(timer));
-    cf?.addEventListener("mouseleave", start);
-
+    hero.addEventListener("mouseenter", () => window.clearInterval(timer));
+    hero.addEventListener("mouseleave", start);
     let startX = null;
-    stage.addEventListener("touchstart", (e) => (startX = e.touches[0].clientX), { passive: true });
-    stage.addEventListener("touchend", (e) => {
+    hero.addEventListener("touchstart", (e) => (startX = e.touches[0].clientX), { passive: true });
+    hero.addEventListener("touchend", (e) => {
       if (startX === null) return;
       const dx = e.changedTouches[0].clientX - startX;
-      if (Math.abs(dx) > 40) (dx < 0 ? next : prev)();
-      startX = null; restart();
+      if (Math.abs(dx) > 40) { (dx < 0 ? next : prev)(); restart(); }
+      startX = null;
     });
-    layout(); start();
+    if (dots[0]) dots[0].classList.add("is-active");
+    start();
+  }
+
+  /* ---------- Client logo strip ---------- */
+  const logosRoot = $("[data-logos]");
+  if (logosRoot) {
+    const track = $("[data-logos-track]", logosRoot);
+    const slots = $$(".logo-slot", logosRoot);
+    const n = slots.length;
+    let index = 0;
+    const gap = () => {
+      const s = window.getComputedStyle(track);
+      return parseFloat(s.columnGap || s.gap) || 26;
+    };
+    const perView = () => {
+      const slotW = slots[0] ? slots[0].getBoundingClientRect().width : 168;
+      const viewW = logosRoot.querySelector(".logo-strip__viewport")?.clientWidth || logosRoot.clientWidth;
+      return Math.max(1, Math.floor((viewW + gap()) / (slotW + gap())));
+    };
+    const maxIndex = () => Math.max(0, n - perView());
+    const layout = () => {
+      const pv = perView();
+      if (n <= pv) {
+        track.style.justifyContent = "center";
+        track.style.transform = "translateX(0)";
+        index = 0;
+        return;
+      }
+      track.style.justifyContent = "flex-start";
+      index = Math.min(index, maxIndex());
+      const slotW = slots[0] ? slots[0].getBoundingClientRect().width : 168;
+      track.style.transform = `translateX(${-(index * (slotW + gap()))}px)`;
+    };
+    $("[data-logos-prev]", logosRoot)?.addEventListener("click", () => {
+      index = index <= 0 ? maxIndex() : index - 1;
+      layout();
+    });
+    $("[data-logos-next]", logosRoot)?.addEventListener("click", () => {
+      index = index >= maxIndex() ? 0 : index + 1;
+      layout();
+    });
+    window.addEventListener("resize", layout);
+    layout();
   }
 
   /* ---------- Certificates carousel (GTL-style document row) ---------- */

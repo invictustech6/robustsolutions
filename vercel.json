@@ -24,6 +24,8 @@
     { "source": "/anabolicos-legal-13", "destination": "/410.html", "permanent": false },
     { "source": "/anabolicos-legal-13/", "destination": "/410.html", "permanent": false },
     { "source": "/client2", "destination": "/410.html", "permanent": false },
-    { "source": "/client2/", "destination": "/410.html", "permanent": false }
+    { "source": "/client2/", "destination": "/410.html", "permanent": false },
+    { "source": "/industries", "destination": "/services/", "permanent": true },
+    { "source": "/industries/", "destination": "/services/", "permanent": true }
   ]
 }
