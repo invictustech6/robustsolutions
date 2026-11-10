@@ -506,17 +506,15 @@ body.nav-open { overflow: hidden; }
 }
 @media (min-width: 900px) {
   .header-2__inner {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 0;
-    column-gap: 1.5rem;
+    gap: 1.1rem;
   }
-  .brand { justify-self: start; }
-  .header-tools { justify-self: end; }
-  .nav { display: flex; width: 100%; justify-content: flex-start; align-items: center; gap: 0; }
-  .nav > .nav-item { flex: 1 1 auto; display: flex; justify-content: center; min-width: 0; }
-  .nav-item > a { padding: 0.45rem 0.15rem; font-size: 0.82rem; border-radius: 0; }
+  .brand, .header-tools { flex: 0 0 auto; }
+  .nav { display: flex; flex: 0 0 auto; width: auto; justify-content: flex-start; align-items: center; gap: 1.1rem; }
+  .nav > .nav-item { flex: 0 0 auto; display: block; }
+  .nav-item > a { padding: 0.45rem 0; font-size: 0.82rem; border-radius: 0; }
   .nav-item > a:hover { background: transparent; }
   .header-1__inner { justify-content: center; overflow: visible; flex-wrap: wrap; }
   .header-1__contacts { flex-wrap: wrap; }
@@ -536,7 +534,8 @@ body.nav-open { overflow: hidden; }
   .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1.3fr; align-items: start; }
 }
 @media (min-width: 1100px) {
-  .header-2__inner { column-gap: 2rem; }
+  .header-2__inner { gap: 1.25rem; }
+  .nav { gap: 1.25rem; }
   .nav-item > a { font-size: 0.92rem; }
   .header-tools .header-cta { padding: 0.82rem 1.4rem; font-size: 0.95rem; }
   .grid-4 { grid-template-columns: repeat(4, 1fr); }
@@ -544,7 +543,7 @@ body.nav-open { overflow: hidden; }
 }
 /* After scroll on wide screens: hide the top nav; only the side names remain. */
 @media (min-width: 1440px) {
-  .site-header.is-compact .header-2__inner { display: flex; justify-content: space-between; column-gap: 0; }
+  .site-header.is-compact .header-2__inner { display: flex; justify-content: space-between; gap: 1rem; }
   .site-header.is-compact .nav { display: none; }
   .side-rail { display: flex; position: fixed; left: 0.7rem; top: 50%; transform: translateY(-50%); z-index: 40; flex-direction: column; align-items: flex-start; gap: 0.55rem; opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease); }
   .side-rail.is-visible { opacity: 1; pointer-events: auto; }
