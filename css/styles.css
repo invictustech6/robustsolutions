@@ -608,11 +608,16 @@ body.nav-open { overflow: hidden; }
   .site-header { overflow: visible; }
   .header-2__inner {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: stretch;
-    gap: 1.1rem;
+    gap: 1.25rem;
   }
-  .brand, .header-tools { flex: 0 0 auto; align-self: center; }
+  .brand {
+    flex: 0 0 auto;
+    align-self: center;
+    margin-right: auto;
+  }
+  .header-tools { flex: 0 0 auto; align-self: center; }
   .nav { display: flex; flex: 0 0 auto; width: auto; justify-content: flex-start; align-items: stretch; align-self: stretch; gap: 1.1rem; }
   .nav > .nav-item { flex: 0 0 auto; display: flex; align-items: center; }
   .nav-item > a { padding: 0.45rem 0; font-size: 0.82rem; border-radius: 0; height: 100%; }
