@@ -6,7 +6,7 @@ Original static rebuild for [robustsolutions.in](https://robustsolutions.in/) us
 
 - Company about copy (cleaned; ISO typo fixed)
 - Facility exterior photo and laboratory bench photo
-- Logo, favicon, BIS mark, NABL mark **TC-10626**
+- Logo, favicon, BIS mark, NABL mark **TC-16290**, FDAS certificate **TL-117**
 - Contact phones, emails, address, WhatsApp
 - Service pathway titles (six testing facilities)
 
@@ -24,7 +24,7 @@ npx --yes serve .
 
 ## Still needs from Robust
 
-- Full certificate PDFs (ISO 9001, ISO 17025/NABL scope, BIS letter)
+- Full certificate PDFs (ISO 9001, NABL scope, BIS letter)
 - Authorized client logos and QA testimonials
 - Extra gallery / training photos
 - CAPTCHA site keys + form mail backend

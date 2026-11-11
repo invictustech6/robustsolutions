@@ -278,9 +278,12 @@
       const title = el.getAttribute("data-cert") || "Certificate";
       const detail = el.getAttribute("data-cert-detail") || "";
       const img = el.getAttribute("data-cert-img");
+      const isDoc = el.hasAttribute("data-cert-doc");
+      const panel = lightbox.querySelector(".lightbox__panel");
+      panel?.classList.toggle("lightbox__panel--doc", Boolean(img && isDoc));
       lightboxBody.innerHTML =
         `<p class="eyebrow">Accreditation</p><h3>${title}</h3>` +
-        (img ? `<img src="${img}" alt="${title}" style="max-width:220px;margin:0 auto 1rem" />` : "") +
+        (img ? `<img src="${img}" alt="${title}" class="lightbox__img${isDoc ? " lightbox__img--doc" : ""}" />` : "") +
         `<p>${detail}</p>`;
       lightbox.classList.add("is-open");
       lightbox.setAttribute("aria-hidden", "false");
