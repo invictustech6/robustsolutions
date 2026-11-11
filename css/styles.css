@@ -183,10 +183,10 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.2rem; }
 .mega__col { min-width: 0; }
 .mega__photo { display: block; margin: 0 0 0.55rem; border-radius: 10px; overflow: hidden; background: var(--off); }
 .mega__photo img { width: 100%; height: 5.4rem; object-fit: cover; display: block; }
-.mega__head { display: block; font-family: var(--fx-display); font-weight: 800; color: var(--navy); font-size: 0.95rem; padding: 0.15rem 0.35rem 0.55rem; margin-bottom: 0.2rem; border-bottom: 1px solid var(--line-soft); }
-.mega__head:hover { color: var(--blue); }
-.mega__col a:not(.mega__head) { display: block; padding: 0.38rem 0.35rem; color: var(--ink); font-size: 0.86rem; font-weight: 600; border-radius: 8px; font-family: var(--fx-display); }
-.mega__col a:not(.mega__head):hover { background: var(--off); color: var(--blue); }
+.mega__head { display: block; font-family: var(--fx-display); font-weight: 800; color: #111; font-size: 0.95rem; padding: 0.15rem 0.35rem 0.55rem; margin-bottom: 0.2rem; border-bottom: 1px solid var(--line-soft); }
+.mega__head:hover { color: #111; }
+.mega__col a:not(.mega__head):not(.mega__photo) { display: block; padding: 0.38rem 0.35rem; color: var(--blue); font-size: 0.86rem; font-weight: 600; border-radius: 8px; font-family: var(--fx-display); }
+.mega__col a:not(.mega__head):not(.mega__photo):hover { background: var(--off); color: var(--blue-600); }
 .mega__foot { margin-top: 0.85rem; padding-top: 0.8rem; border-top: 1px solid var(--line-soft); display: flex; justify-content: space-between; align-items: center; }
 .mega__foot a { font-family: var(--fx-display); font-weight: 700; font-size: 0.86rem; }
 .img-slot { display: grid; place-items: center; width: 100%; min-height: 10rem; background: var(--off); color: var(--muted); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.02em; border: 1px dashed var(--line); }
