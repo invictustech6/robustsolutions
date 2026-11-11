@@ -286,12 +286,7 @@
       const safeTitle = title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
       let media = "";
       if (pdf) {
-        media =
-          `<iframe class="lightbox__pdf" title="${safeTitle}" src="${pdf}#view=FitH"></iframe>` +
-          `<p class="lightbox__actions">` +
-          `<a class="btn btn-outline" href="${pdf}" target="_blank" rel="noopener">Open PDF</a>` +
-          `<a class="btn btn-primary" href="${pdf}" download>Download</a>` +
-          `</p>`;
+        media = `<iframe class="lightbox__pdf" title="${safeTitle}" src="${pdf}#toolbar=0&navpanes=0&scrollbar=0&view=FitH"></iframe>`;
       } else if (img) {
         media = `<img src="${img}" alt="${safeTitle}" class="lightbox__img${isDoc ? " lightbox__img--doc" : ""}" />`;
       }
