@@ -172,7 +172,7 @@
       const g = gap();
       track.style.transform = `translateX(${-(index * (cardW + g))}px)`;
       dots.forEach((d, i) => d.classList.toggle("is-active", i === index));
-      const sliding = n > 1;
+      const sliding = maxIndex() > 0;
       if (prevBtn) prevBtn.hidden = !sliding;
       if (nextBtn) nextBtn.hidden = !sliding;
       if (dotsWrap) dotsWrap.hidden = !sliding;
