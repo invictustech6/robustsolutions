@@ -124,46 +124,11 @@
     start();
   }
 
-  /* ---------- Client logo strip ---------- */
+  /* ---------- Client logo marquee (CSS animation; JS only pauses on pointer) ---------- */
   const logosRoot = $("[data-logos]");
   if (logosRoot) {
-    const track = $("[data-logos-track]", logosRoot);
-    const slots = $$(".logo-slot", logosRoot);
-    const n = slots.length;
-    let index = 0;
-    const gap = () => {
-      const s = window.getComputedStyle(track);
-      return parseFloat(s.columnGap || s.gap) || 26;
-    };
-    const perView = () => {
-      const slotW = slots[0] ? slots[0].getBoundingClientRect().width : 168;
-      const viewW = logosRoot.querySelector(".logo-strip__viewport")?.clientWidth || logosRoot.clientWidth;
-      return Math.max(1, Math.floor((viewW + gap()) / (slotW + gap())));
-    };
-    const maxIndex = () => Math.max(0, n - perView());
-    const layout = () => {
-      const pv = perView();
-      if (n <= pv) {
-        track.style.justifyContent = "center";
-        track.style.transform = "translateX(0)";
-        index = 0;
-        return;
-      }
-      track.style.justifyContent = "flex-start";
-      index = Math.min(index, maxIndex());
-      const slotW = slots[0] ? slots[0].getBoundingClientRect().width : 168;
-      track.style.transform = `translateX(${-(index * (slotW + gap()))}px)`;
-    };
-    $("[data-logos-prev]", logosRoot)?.addEventListener("click", () => {
-      index = index <= 0 ? maxIndex() : index - 1;
-      layout();
-    });
-    $("[data-logos-next]", logosRoot)?.addEventListener("click", () => {
-      index = index >= maxIndex() ? 0 : index + 1;
-      layout();
-    });
-    window.addEventListener("resize", layout);
-    layout();
+    logosRoot.addEventListener("mouseenter", () => logosRoot.classList.add("is-paused"));
+    logosRoot.addEventListener("mouseleave", () => logosRoot.classList.remove("is-paused"));
   }
 
   /* ---------- Certificates carousel (GTL-style document row) ---------- */
@@ -195,32 +160,48 @@
     });
     const prevBtn = $("[data-certs-prev]", certsRoot);
     const nextBtn = $("[data-certs-next]", certsRoot);
-    const go = (i) => { index = Math.max(0, Math.min(i, maxIndex())); layout(); };
+    const go = (i) => {
+      const max = maxIndex();
+      if (max <= 0) { index = 0; layout(); return; }
+      index = ((i % (max + 1)) + (max + 1)) % (max + 1);
+      layout();
+    };
     const layout = () => {
       index = Math.min(index, maxIndex());
       const cardW = cards[0] ? cards[0].getBoundingClientRect().width : 0;
       const g = gap();
-      const used = n * cardW + Math.max(0, n - 1) * g;
-      const origin = Math.max(0, (viewport.clientWidth - used) / 2);
-      track.style.transform = `translateX(${origin - index * (cardW + g)}px)`;
+      track.style.transform = `translateX(${-(index * (cardW + g))}px)`;
       dots.forEach((d, i) => d.classList.toggle("is-active", i === index));
-      const sliding = maxIndex() > 0;
+      const sliding = n > 1;
       if (prevBtn) prevBtn.hidden = !sliding;
       if (nextBtn) nextBtn.hidden = !sliding;
       if (dotsWrap) dotsWrap.hidden = !sliding;
     };
-    nextBtn?.addEventListener("click", () => go(index >= maxIndex() ? 0 : index + 1));
-    prevBtn?.addEventListener("click", () => go(index <= 0 ? maxIndex() : index - 1));
+    const step = (dir) => go(index + dir);
+    nextBtn?.addEventListener("click", () => { step(1); restart(); });
+    prevBtn?.addEventListener("click", () => { step(-1); restart(); });
     let startX = null;
     viewport.addEventListener("touchstart", (e) => (startX = e.touches[0].clientX), { passive: true });
     viewport.addEventListener("touchend", (e) => {
       if (startX === null) return;
       const dx = e.changedTouches[0].clientX - startX;
-      if (Math.abs(dx) > 40) go(index + (dx < 0 ? 1 : -1));
+      if (Math.abs(dx) > 40) { step(dx < 0 ? 1 : -1); restart(); }
       startX = null;
+    });
+    let timer;
+    const start = () => {
+      if (!prefersReduced && n > 1) timer = window.setInterval(() => step(1), 4200);
+    };
+    const restart = () => { window.clearInterval(timer); start(); };
+    certsRoot.addEventListener("mouseenter", () => window.clearInterval(timer));
+    certsRoot.addEventListener("mouseleave", start);
+    certsRoot.addEventListener("focusin", () => window.clearInterval(timer));
+    certsRoot.addEventListener("focusout", (e) => {
+      if (!certsRoot.contains(e.relatedTarget)) start();
     });
     window.addEventListener("resize", layout, { passive: true });
     layout();
+    start();
   }
 
   /* ---------- Testimonials carousel ---------- */
