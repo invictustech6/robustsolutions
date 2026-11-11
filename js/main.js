@@ -282,13 +282,15 @@
       const isDoc = el.hasAttribute("data-cert-doc");
       const panel = lightbox.querySelector(".lightbox__panel");
       panel?.classList.toggle("lightbox__panel--doc", Boolean((img && isDoc) || pdf));
-      panel?.classList.toggle("lightbox__panel--pdf", Boolean(pdf));
+      panel?.classList.toggle("lightbox__panel--pdf", Boolean(pdf && !(img && isDoc)));
       const safeTitle = title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
       let media = "";
-      if (pdf) {
+      if (img && isDoc) {
+        media = `<img src="${img}" alt="${safeTitle}" class="lightbox__img lightbox__img--doc" />`;
+      } else if (pdf) {
         media = `<iframe class="lightbox__pdf" title="${safeTitle}" src="${pdf}#toolbar=0&navpanes=0&scrollbar=0&view=FitH"></iframe>`;
       } else if (img) {
-        media = `<img src="${img}" alt="${safeTitle}" class="lightbox__img${isDoc ? " lightbox__img--doc" : ""}" />`;
+        media = `<img src="${img}" alt="${safeTitle}" class="lightbox__img" />`;
       }
       lightboxBody.innerHTML =
         `<p class="eyebrow">Accreditation</p><h3>${safeTitle}</h3>` +
