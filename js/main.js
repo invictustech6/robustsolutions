@@ -278,13 +278,27 @@
       const title = el.getAttribute("data-cert") || "Certificate";
       const detail = el.getAttribute("data-cert-detail") || "";
       const img = el.getAttribute("data-cert-img");
+      const pdf = el.getAttribute("data-cert-pdf");
       const isDoc = el.hasAttribute("data-cert-doc");
       const panel = lightbox.querySelector(".lightbox__panel");
-      panel?.classList.toggle("lightbox__panel--doc", Boolean(img && isDoc));
+      panel?.classList.toggle("lightbox__panel--doc", Boolean((img && isDoc) || pdf));
+      panel?.classList.toggle("lightbox__panel--pdf", Boolean(pdf));
+      const safeTitle = title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+      let media = "";
+      if (pdf) {
+        media =
+          `<iframe class="lightbox__pdf" title="${safeTitle}" src="${pdf}#view=FitH"></iframe>` +
+          `<p class="lightbox__actions">` +
+          `<a class="btn btn-outline" href="${pdf}" target="_blank" rel="noopener">Open PDF</a>` +
+          `<a class="btn btn-primary" href="${pdf}" download>Download</a>` +
+          `</p>`;
+      } else if (img) {
+        media = `<img src="${img}" alt="${safeTitle}" class="lightbox__img${isDoc ? " lightbox__img--doc" : ""}" />`;
+      }
       lightboxBody.innerHTML =
-        `<p class="eyebrow">Accreditation</p><h3>${title}</h3>` +
-        (img ? `<img src="${img}" alt="${title}" class="lightbox__img${isDoc ? " lightbox__img--doc" : ""}" />` : "") +
-        `<p>${detail}</p>`;
+        `<p class="eyebrow">Accreditation</p><h3>${safeTitle}</h3>` +
+        media +
+        (detail ? `<p>${detail}</p>` : "");
       lightbox.classList.add("is-open");
       lightbox.setAttribute("aria-hidden", "false");
       lightboxClose?.focus();

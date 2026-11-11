@@ -589,8 +589,11 @@ body.nav-open { overflow: hidden; }
 .lightbox.is-open { display: grid; animation: fade-in 0.25s var(--ease); }
 .lightbox__panel { background: #fff; max-width: 560px; width: 100%; padding: 1.75rem; border-radius: var(--r-lg); position: relative; box-shadow: var(--shadow-lg); }
 .lightbox__panel--doc { max-width: min(52rem, 96vw); max-height: 94vh; overflow: auto; }
+.lightbox__panel--pdf { max-width: min(56rem, 96vw); }
 .lightbox__img { max-width: 220px; margin: 0 auto 1rem; display: block; }
 .lightbox__img--doc { max-width: 100%; max-height: 78vh; width: auto; height: auto; object-fit: contain; }
+.lightbox__pdf { width: 100%; height: min(72vh, 58rem); border: 1px solid var(--line-soft); border-radius: 10px; background: var(--off); margin: 0 0 1rem; }
+.lightbox__actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin: 0 0 1rem; }
 .lightbox__close { position: absolute; top: 0.6rem; right: 0.7rem; border: 0; background: var(--off); width: 2.2rem; height: 2.2rem; border-radius: 50%; font-size: 1.3rem; cursor: pointer; color: var(--blue); line-height: 1; z-index: 1; }
 
 /* WhatsApp float */
