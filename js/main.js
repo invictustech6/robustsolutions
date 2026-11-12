@@ -248,49 +248,19 @@
     } else counters.forEach(run);
   }
 
-  /* ---------- Certificate lightbox ---------- */
-  const lightbox = $(".lightbox");
-  const lightboxBody = $("[data-lightbox-body]");
-  const lightboxClose = $("[data-lightbox-close]");
-  let lastFocused = null;
-  $$("[data-cert]").forEach((el) => {
-    el.addEventListener("click", () => {
-      if (!lightbox || !lightboxBody) return;
-      lastFocused = el;
-      const title = el.getAttribute("data-cert") || "Certificate";
-      const detail = el.getAttribute("data-cert-detail") || "";
-      const img = el.getAttribute("data-cert-img");
-      const pdf = el.getAttribute("data-cert-pdf");
-      const isDoc = el.hasAttribute("data-cert-doc");
-      const panel = lightbox.querySelector(".lightbox__panel");
-      panel?.classList.toggle("lightbox__panel--doc", Boolean((img && isDoc) || pdf));
-      panel?.classList.toggle("lightbox__panel--pdf", Boolean(pdf && !(img && isDoc)));
-      const safeTitle = title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
-      let media = "";
-      if (img && isDoc) {
-        media = `<img src="${img}" alt="${safeTitle}" class="lightbox__img lightbox__img--doc" />`;
-      } else if (pdf) {
-        media = `<iframe class="lightbox__pdf" title="${safeTitle}" src="${pdf}#toolbar=0&navpanes=0&scrollbar=0&view=FitH"></iframe>`;
-      } else if (img) {
-        media = `<img src="${img}" alt="${safeTitle}" class="lightbox__img" />`;
-      }
-      lightboxBody.innerHTML =
-        `<p class="eyebrow">Accreditation</p><h3>${safeTitle}</h3>` +
-        media +
-        (detail ? `<p>${detail}</p>` : "");
-      lightbox.classList.add("is-open");
-      lightbox.setAttribute("aria-hidden", "false");
-      lightboxClose?.focus();
+  /* ---------- Certificate hover enlarge (no lightbox / no download) ---------- */
+  const certZoomables = $$(".certs-card, .cert[data-cert]");
+  certZoomables.forEach((el) => {
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      const on = !el.classList.contains("is-enlarged");
+      certZoomables.forEach((other) => other.classList.remove("is-enlarged"));
+      if (on) el.classList.add("is-enlarged");
     });
   });
-  const closeLightbox = () => {
-    lightbox?.classList.remove("is-open");
-    lightbox?.setAttribute("aria-hidden", "true");
-    lastFocused?.focus();
-  };
-  lightboxClose?.addEventListener("click", closeLightbox);
-  lightbox?.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") certZoomables.forEach((el) => el.classList.remove("is-enlarged"));
+  });
 
   /* ---------- Gallery filters ---------- */
   const filterBtns = $$("[data-filter]");
