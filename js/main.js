@@ -17,12 +17,13 @@
     const y = window.scrollY || 0;
     const compact = y > 72;
     const useRail = compact && wideRail();
+    const hideTopNav = compact && window.matchMedia("(min-width: 900px)").matches;
     header2?.classList.toggle("is-scrolled", y > 8);
     siteHeader?.classList.toggle("is-compact", compact);
     sideRail?.classList.toggle("is-visible", useRail);
     if (primaryNav) {
-      primaryNav.setAttribute("aria-hidden", useRail ? "true" : "false");
-      if (useRail) primaryNav.setAttribute("inert", "");
+      primaryNav.setAttribute("aria-hidden", hideTopNav ? "true" : "false");
+      if (hideTopNav) primaryNav.setAttribute("inert", "");
       else primaryNav.removeAttribute("inert");
     }
     if (sideRail) sideRail.setAttribute("aria-hidden", useRail ? "false" : "true");
