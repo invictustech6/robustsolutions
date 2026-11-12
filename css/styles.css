@@ -301,15 +301,14 @@ body.nav-open { overflow: hidden; }
 .btn-lg { padding: 0.98rem 1.65rem; font-size: 1.02rem; }
 
 /* ============================================================ Hero — full-bleed fade carousel */
-.hero { position: relative; color: #fff; overflow: hidden; background: var(--navy); min-height: clamp(36rem, 94vh, 64rem); }
+.hero { position: relative; color: #fff; overflow: hidden; background: var(--navy); min-height: clamp(36rem, 92vh, 56rem); }
 .hero-slides { position: absolute; inset: 0; }
 .hero-slide { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity 0.7s ease; pointer-events: none; }
 .hero-slide.is-active { opacity: 1; pointer-events: auto; }
-.hero-slide img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 48%; }
-.hero-slide--facility img { object-position: 50% 48%; }
+.hero-slide img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .hero-slide__cap { position: absolute; left: 1.25rem; bottom: 3.4rem; z-index: 2; margin: 0; background: rgba(11,25,48,0.72); color: #fff; padding: 0.45rem 0.95rem; border-radius: var(--r-pill); font-size: 0.82rem; font-weight: 600; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.18); }
 .hero__veil { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgba(11,25,48,0.82) 0%, rgba(11,25,48,0.52) 46%, rgba(11,25,48,0.22) 100%), linear-gradient(180deg, rgba(11,25,48,0.18) 0%, transparent 28%, rgba(11,25,48,0.35) 100%); }
-.hero__inner { position: relative; z-index: 2; width: min(100% - 2.2rem, var(--max-wide)); margin-inline: auto; min-height: clamp(36rem, 94vh, 64rem); display: flex; align-items: center; padding: clamp(3.2rem, 8vw, 5.5rem) 0 4.6rem; }
+.hero__inner { position: relative; z-index: 2; width: min(100% - 2.2rem, var(--max-wide)); margin-inline: auto; min-height: clamp(36rem, 92vh, 56rem); display: flex; align-items: center; padding: clamp(3.2rem, 8vw, 5.5rem) 0 4.6rem; }
 .hero__copy { max-width: 38rem; }
 .hero__badge { display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.2rem; padding: 0.4rem 0.85rem; border-radius: var(--r-pill); background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-bright); backdrop-filter: blur(6px); }
 .hero__badge .pulse { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--gold-bright); animation: pulse 2.2s infinite; }
