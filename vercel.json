@@ -38,6 +38,10 @@
     { "source": "/client2", "destination": "/410.html", "permanent": false },
     { "source": "/client2/", "destination": "/410.html", "permanent": false },
     { "source": "/industries", "destination": "/services/", "permanent": true },
-    { "source": "/industries/", "destination": "/services/", "permanent": true }
+    { "source": "/industries/", "destination": "/services/", "permanent": true },
+    { "source": "/services/cable-testing/power-cables", "destination": "/services/cable-testing/power-and-control-cables/", "permanent": true },
+    { "source": "/services/cable-testing/power-cables/", "destination": "/services/cable-testing/power-and-control-cables/", "permanent": true },
+    { "source": "/services/cable-testing/control-cables", "destination": "/services/cable-testing/power-and-control-cables/", "permanent": true },
+    { "source": "/services/cable-testing/control-cables/", "destination": "/services/cable-testing/power-and-control-cables/", "permanent": true }
   ]
 }
