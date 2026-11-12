@@ -1,0 +1,433 @@
+(() => {
+  "use strict";
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+  /* ---------- Sticky header + side rail ---------- */
+  const siteHeader = $(".site-header");
+  const header2 = $(".header-2");
+  const sideRail = $(".side-rail");
+  const primaryNav = $("#primary-nav");
+  const wideRail = () => window.matchMedia("(min-width: 1440px)").matches;
+  const setStack = () => {
+    if (siteHeader) document.documentElement.style.setProperty("--stack", siteHeader.offsetHeight + "px");
+  };
+  const onScroll = () => {
+    const y = window.scrollY || 0;
+    const compact = y > 72;
+    const useRail = compact && wideRail();
+    const hideTopNav = compact && window.matchMedia("(min-width: 900px)").matches;
+    header2?.classList.toggle("is-scrolled", y > 8);
+    siteHeader?.classList.toggle("is-compact", compact);
+    sideRail?.classList.toggle("is-visible", useRail);
+    if (primaryNav) {
+      primaryNav.setAttribute("aria-hidden", hideTopNav ? "true" : "false");
+      if (hideTopNav) primaryNav.setAttribute("inert", "");
+      else primaryNav.removeAttribute("inert");
+    }
+    if (sideRail) sideRail.setAttribute("aria-hidden", useRail ? "false" : "true");
+    setStack();
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  window.addEventListener("resize", () => { setStack(); onScroll(); }, { passive: true });
+  window.addEventListener("load", () => { setStack(); onScroll(); });
+
+  /* ---------- Mobile nav ---------- */
+  const navToggle = $(".nav-toggle");
+  const mobileNav = $(".mobile-nav");
+  if (navToggle && mobileNav) {
+    const closeNav = ({ focusToggle = false } = {}) => {
+      mobileNav.classList.remove("is-open");
+      document.body.classList.remove("nav-open");
+      navToggle.setAttribute("aria-expanded", "false");
+      if (focusToggle) navToggle.focus();
+    };
+    navToggle.addEventListener("click", () => {
+      const open = mobileNav.classList.toggle("is-open");
+      document.body.classList.toggle("nav-open", open);
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) {
+        const first = mobileNav.querySelector("a");
+        if (first) first.focus();
+      }
+    });
+    $$("a", mobileNav).forEach((a) =>
+      a.addEventListener("click", () => closeNav())
+    );
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && mobileNav.classList.contains("is-open")) closeNav({ focusToggle: true });
+    });
+  }
+
+  /* ---------- Scroll reveal ---------- */
+  const reveals = $$(".reveal");
+  if (prefersReduced || !("IntersectionObserver" in window)) {
+    reveals.forEach((el) => el.classList.add("is-in"));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-in");
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    );
+    reveals.forEach((el) => io.observe(el));
+  }
+
+  /* ---------- Hero fade carousel ---------- */
+  const hero = $(".hero--fade");
+  if (hero) {
+    const slides = $$(".hero-slide", hero);
+    const dotsWrap = $("[data-hero-dots]", hero);
+    const n = slides.length;
+    let current = 0;
+    let timer;
+    const dots = slides.map((slide, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", `Show slide ${i + 1}`);
+      b.addEventListener("click", () => { go(i); restart(); });
+      dotsWrap?.appendChild(b);
+      if (i !== 0) slide.setAttribute("aria-hidden", "true");
+      return b;
+    });
+    const go = (i) => {
+      current = (i + n) % n;
+      slides.forEach((s, idx) => {
+        s.classList.toggle("is-active", idx === current);
+        s.setAttribute("aria-hidden", idx === current ? "false" : "true");
+      });
+      dots.forEach((d, idx) => d.classList.toggle("is-active", idx === current));
+    };
+    const next = () => go(current + 1);
+    const prev = () => go(current - 1);
+    $("[data-hero-next]", hero)?.addEventListener("click", () => { next(); restart(); });
+    $("[data-hero-prev]", hero)?.addEventListener("click", () => { prev(); restart(); });
+    const start = () => { if (!prefersReduced && n > 1) timer = window.setInterval(next, 5500); };
+    const restart = () => { window.clearInterval(timer); start(); };
+    hero.addEventListener("mouseenter", () => window.clearInterval(timer));
+    hero.addEventListener("mouseleave", start);
+    let startX = null;
+    hero.addEventListener("touchstart", (e) => (startX = e.touches[0].clientX), { passive: true });
+    hero.addEventListener("touchend", (e) => {
+      if (startX === null) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) { (dx < 0 ? next : prev)(); restart(); }
+      startX = null;
+    });
+    if (dots[0]) dots[0].classList.add("is-active");
+    start();
+  }
+
+  /* ---------- Client logo marquee (CSS animation; JS only pauses on pointer) ---------- */
+  const logosRoot = $("[data-logos]");
+  if (logosRoot) {
+    logosRoot.addEventListener("mouseenter", () => logosRoot.classList.add("is-paused"));
+    logosRoot.addEventListener("mouseleave", () => logosRoot.classList.remove("is-paused"));
+  }
+
+  /* ---------- Certificates carousel (GTL-style document row) ---------- */
+  const certsRoot = $("[data-certs]");
+  if (certsRoot) {
+    const viewport = $("[data-certs-viewport]", certsRoot);
+    const track = $("[data-certs-track]", certsRoot);
+    const cards = $$(".certs-card", certsRoot);
+    const dotsWrap = $("[data-certs-dots]");
+    const n = cards.length;
+    let index = 0;
+    const gap = () => {
+      const s = window.getComputedStyle(track);
+      return parseFloat(s.columnGap || s.gap) || 22;
+    };
+    const perView = () => {
+      const cardW = cards[0] ? cards[0].getBoundingClientRect().width : 220;
+      const g = gap();
+      return Math.max(1, Math.min(n, Math.floor((viewport.clientWidth + g) / (cardW + g))));
+    };
+    const maxIndex = () => Math.max(0, n - perView());
+    const dots = cards.map((_, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", `Show certificate ${i + 1}`);
+      b.addEventListener("click", () => go(i));
+      dotsWrap?.appendChild(b);
+      return b;
+    });
+    const prevBtn = $("[data-certs-prev]", certsRoot);
+    const nextBtn = $("[data-certs-next]", certsRoot);
+    const go = (i) => {
+      const max = maxIndex();
+      if (max <= 0) { index = 0; layout(); return; }
+      index = ((i % (max + 1)) + (max + 1)) % (max + 1);
+      layout();
+    };
+    const layout = () => {
+      index = Math.min(index, maxIndex());
+      const cardW = cards[0] ? cards[0].getBoundingClientRect().width : 0;
+      const g = gap();
+      track.style.transform = `translateX(${-(index * (cardW + g))}px)`;
+      dots.forEach((d, i) => d.classList.toggle("is-active", i === index));
+      const sliding = maxIndex() > 0;
+      if (prevBtn) prevBtn.hidden = !sliding;
+      if (nextBtn) nextBtn.hidden = !sliding;
+      if (dotsWrap) dotsWrap.hidden = !sliding;
+    };
+    const step = (dir) => go(index + dir);
+    nextBtn?.addEventListener("click", () => { step(1); restart(); });
+    prevBtn?.addEventListener("click", () => { step(-1); restart(); });
+    let startX = null;
+    viewport.addEventListener("touchstart", (e) => (startX = e.touches[0].clientX), { passive: true });
+    viewport.addEventListener("touchend", (e) => {
+      if (startX === null) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) { step(dx < 0 ? 1 : -1); restart(); }
+      startX = null;
+    });
+    let timer;
+    const start = () => {
+      if (!prefersReduced && n > 1) timer = window.setInterval(() => step(1), 4200);
+    };
+    const restart = () => { window.clearInterval(timer); start(); };
+    certsRoot.addEventListener("mouseenter", () => window.clearInterval(timer));
+    certsRoot.addEventListener("mouseleave", start);
+    certsRoot.addEventListener("focusin", () => window.clearInterval(timer));
+    certsRoot.addEventListener("focusout", (e) => {
+      if (!certsRoot.contains(e.relatedTarget)) start();
+    });
+    window.addEventListener("resize", layout, { passive: true });
+    layout();
+    start();
+  }
+
+  /* ---------- Testimonials carousel ---------- */
+  const quotesRoot = $("[data-quotes]");
+  if (quotesRoot) {
+    const slides = $$(".quotes__slide", quotesRoot);
+    let qi = 0;
+    const show = (i) => {
+      qi = (i + slides.length) % slides.length;
+      slides.forEach((s, n) => s.classList.toggle("is-active", n === qi));
+    };
+    $("[data-quotes-prev]", quotesRoot)?.addEventListener("click", () => show(qi - 1));
+    $("[data-quotes-next]", quotesRoot)?.addEventListener("click", () => show(qi + 1));
+    let qStart = null;
+    quotesRoot.addEventListener("touchstart", (e) => (qStart = e.touches[0].clientX), { passive: true });
+    quotesRoot.addEventListener("touchend", (e) => {
+      if (qStart === null) return;
+      const dx = e.changedTouches[0].clientX - qStart;
+      if (Math.abs(dx) > 40) show(qi + (dx < 0 ? 1 : -1));
+      qStart = null;
+    });
+  }
+
+  /* ---------- Count-up stats ---------- */
+  const counters = $$("[data-count]");
+  if (counters.length) {
+    const run = (el) => {
+      const target = parseFloat(el.getAttribute("data-count"));
+      if (prefersReduced) { el.textContent = String(target); return; }
+      const dur = 1400, t0 = performance.now();
+      const tick = (t) => {
+        const p = Math.min((t - t0) / dur, 1);
+        el.textContent = String(Math.round(target * (1 - Math.pow(1 - p, 3))));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    if ("IntersectionObserver" in window) {
+      const cio = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { run(e.target); cio.unobserve(e.target); } });
+      }, { threshold: 0.5 });
+      counters.forEach((c) => cio.observe(c));
+    } else counters.forEach(run);
+  }
+
+  /* ---------- Certificate hover preview (same scan, no download) ---------- */
+  const certPreview = $("[data-cert-preview]");
+  const certPreviewImg = $("[data-cert-preview-img]");
+  const certPreviewWin = certPreview?.querySelector(".cert-preview__window");
+  const certTriggers = $$(".certs-card, .cert[data-cert]");
+  let certHideTimer = null;
+  let certHoldUntil = 0;
+  let lastPtr = { x: 0, y: 0 };
+  document.addEventListener("mousemove", (e) => { lastPtr = { x: e.clientX, y: e.clientY }; }, { passive: true });
+  const pointerOverCertUi = () => {
+    const node = document.elementFromPoint(lastPtr.x, lastPtr.y);
+    if (!node) return false;
+    if (certPreviewWin && certPreviewWin.contains(node)) return true;
+    return certTriggers.some((el) => el.contains(node));
+  };
+  const hideCertPreview = () => {
+    window.clearTimeout(certHideTimer);
+    certPreview?.classList.remove("is-open");
+    certPreview?.setAttribute("aria-hidden", "true");
+  };
+  const hideCertPreviewSoon = () => {
+    if (performance.now() < certHoldUntil) return;
+    window.clearTimeout(certHideTimer);
+    certHideTimer = window.setTimeout(() => {
+      if (performance.now() < certHoldUntil) return;
+      if (pointerOverCertUi()) return;
+      hideCertPreview();
+    }, 180);
+  };
+  const showCertPreview = (el) => {
+    const srcImg = $("img", el);
+    if (!certPreview || !certPreviewImg || !srcImg) return;
+    window.clearTimeout(certHideTimer);
+    const src = srcImg.currentSrc || srcImg.getAttribute("src");
+    if (!src) return;
+    certPreviewImg.src = src;
+    certPreviewImg.alt = srcImg.getAttribute("alt") || "Certificate";
+    certPreview.classList.add("is-open");
+    certPreview.setAttribute("aria-hidden", "false");
+    certHoldUntil = performance.now() + 400;
+  };
+  certTriggers.forEach((el) => {
+    el.addEventListener("mouseenter", () => showCertPreview(el));
+    el.addEventListener("mouseleave", hideCertPreviewSoon);
+    el.addEventListener("focus", () => showCertPreview(el));
+    el.addEventListener("blur", hideCertPreviewSoon);
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      const srcImg = $("img", el);
+      const src = srcImg?.currentSrc || srcImg?.getAttribute("src");
+      if (certPreview?.classList.contains("is-open") && certPreviewImg?.currentSrc === src) hideCertPreview();
+      else showCertPreview(el);
+    });
+  });
+  certPreviewWin?.addEventListener("mouseenter", () => window.clearTimeout(certHideTimer));
+  certPreviewWin?.addEventListener("mouseleave", hideCertPreviewSoon);
+  $("[data-cert-preview-close]")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    hideCertPreview();
+  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") hideCertPreview(); });
+
+  /* ---------- Gallery filters ---------- */
+  const filterBtns = $$("[data-filter]");
+  const items = $$("[data-gallery-item]");
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterBtns.forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      const f = btn.getAttribute("data-filter");
+      items.forEach((item) => item.classList.toggle("is-hidden", f !== "all" && item.getAttribute("data-category") !== f));
+    });
+  });
+
+  /* ---------- Forms: validation + honest status (no fake success) ---------- */
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const telRe = /^[+\d][\d\s\-()]{6,}$/;
+  (async () => {
+    let turnstileSiteKey = "";
+    try {
+      const cfgRes = await fetch("/api/form-config", { headers: { Accept: "application/json" } });
+      if (cfgRes.ok) {
+        const cfg = await cfgRes.json();
+        turnstileSiteKey = cfg.turnstileSiteKey || "";
+      }
+    } catch { /* local file or API unavailable */ }
+    if (turnstileSiteKey) {
+      await new Promise((resolve, reject) => {
+        const s = document.createElement("script");
+        s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+        s.async = true;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      }).catch(() => {});
+    }
+    const widgetIds = new WeakMap();
+    $$("form[data-query-form]").forEach((form) => {
+      const slot = $("[data-turnstile]", form);
+      if (slot && turnstileSiteKey && window.turnstile) {
+        widgetIds.set(form, window.turnstile.render(slot, { sitekey: turnstileSiteKey, theme: "light" }));
+      }
+    const started = Date.now();
+    const status = $("[data-form-status]", form);
+    const setStatus = (msg, kind) => {
+      if (!status) return;
+      status.textContent = msg;
+      status.className = "form-status is-show is-" + kind;
+    };
+    const fieldError = (input, msg) => {
+      const holder = input.closest(".field");
+      let err = holder?.querySelector(".field-error");
+      if (holder && !err) { err = document.createElement("div"); err.className = "field-error"; holder.appendChild(err); }
+      if (err) err.textContent = msg || "";
+      input.setAttribute("aria-invalid", msg ? "true" : "false");
+    };
+    const validate = () => {
+      let ok = true, firstBad = null;
+      $$("input, textarea, select", form).forEach((input) => {
+        if (input.type === "hidden" || input.closest(".hp")) return;
+        let msg = "";
+        const v = (input.value || "").trim();
+        if (input.required && !v) msg = "This field is required.";
+        else if (v && input.type === "email" && !emailRe.test(v)) msg = "Enter a valid email address.";
+        else if (v && input.type === "tel" && !telRe.test(v)) msg = "Enter a valid phone number.";
+        fieldError(input, msg);
+        if (msg) { ok = false; firstBad = firstBad || input; }
+      });
+      if (firstBad) firstBad.focus();
+      return ok;
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const hp = $(".hp input", form);
+      if (hp && hp.value) return; // bot
+      if (Date.now() - started < 1200) { setStatus("Please take a moment to complete the form, then submit again.", "err"); return; }
+      if (!validate()) { setStatus("Please correct the highlighted fields and submit again.", "err"); return; }
+
+      const endpoint = form.getAttribute("data-endpoint");
+      const submitBtn = $("button[type=submit]", form);
+      const fallback = 'We couldn\'t submit your enquiry online right now. Please email info@robustsolutions.in or call +91 99687 17582 and our team will respond during working hours (Mon–Sat, 9:30 AM–6:30 PM IST).';
+      if (!endpoint) { setStatus(fallback, "info"); return; }
+      try {
+        submitBtn && (submitBtn.disabled = true);
+        setStatus("Sending your enquiry…", "info");
+        const data = Object.fromEntries(new FormData(form).entries());
+        const widgetId = widgetIds.get(form);
+        if (turnstileSiteKey) {
+          const token = window.turnstile && widgetId != null ? window.turnstile.getResponse(widgetId) : "";
+          if (!token) {
+            setStatus("Please complete the verification and submit again.", "err");
+            return;
+          }
+          data.turnstileToken = token;
+        }
+        const res = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+        if (res.ok) {
+          setStatus("Thank you — your enquiry has been received. Our team will respond during working hours (Mon–Sat, 9:30 AM–6:30 PM IST).", "ok");
+          form.reset();
+        } else if (res.status === 429) {
+          setStatus("You've sent several enquiries in a short time. Please wait a minute and try again, or email info@robustsolutions.in.", "err");
+        } else if (res.status === 403) {
+          setStatus("Verification failed. Please try again.", "err");
+        } else {
+          // 404/501/503 (online submission unavailable) or any other non-OK: honest contact fallback, never a success.
+          setStatus(fallback, "info");
+        }
+      } catch {
+        setStatus(fallback, "err");
+      } finally {
+        submitBtn && (submitBtn.disabled = false);
+        const widgetId = widgetIds.get(form);
+        if (widgetId != null && window.turnstile) window.turnstile.reset(widgetId);
+      }
+    });
+  });
+  })();
+
+  /* ---------- Year ---------- */
+  $$("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
+})();
