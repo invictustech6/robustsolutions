@@ -13,22 +13,42 @@
   const setStack = () => {
     if (siteHeader) document.documentElement.style.setProperty("--stack", siteHeader.offsetHeight + "px");
   };
-  const onScroll = () => {
-    const y = window.scrollY || 0;
-    const compact = y > 72;
-    const useRail = compact && wideRail();
-    const hideTopNav = compact && window.matchMedia("(min-width: 900px)").matches;
-    header2?.classList.toggle("is-scrolled", y > 8);
-    siteHeader?.classList.toggle("is-compact", compact);
-    sideRail?.classList.toggle("is-visible", useRail);
+  const applyNavLock = () => {
+    const compact = siteHeader?.classList.contains("is-compact");
+    const revealed = siteHeader?.classList.contains("is-revealed");
+    const hideTopNav = compact && !revealed && window.matchMedia("(min-width: 900px)").matches;
     if (primaryNav) {
       primaryNav.setAttribute("aria-hidden", hideTopNav ? "true" : "false");
       if (hideTopNav) primaryNav.setAttribute("inert", "");
       else primaryNav.removeAttribute("inert");
     }
+  };
+  const onScroll = () => {
+    const y = window.scrollY || 0;
+    const compact = y > 72;
+    const useRail = compact && wideRail();
+    header2?.classList.toggle("is-scrolled", y > 8);
+    siteHeader?.classList.toggle("is-compact", compact);
+    if (!compact) siteHeader?.classList.remove("is-revealed");
+    sideRail?.classList.toggle("is-visible", useRail);
+    applyNavLock();
     if (sideRail) sideRail.setAttribute("aria-hidden", useRail ? "false" : "true");
     setStack();
   };
+  if (siteHeader) {
+    siteHeader.addEventListener("mouseenter", () => {
+      if (siteHeader.classList.contains("is-compact")) {
+        siteHeader.classList.add("is-revealed");
+        applyNavLock();
+        setStack();
+      }
+    });
+    siteHeader.addEventListener("mouseleave", () => {
+      siteHeader.classList.remove("is-revealed");
+      applyNavLock();
+      setStack();
+    });
+  }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
   window.addEventListener("resize", () => { setStack(); onScroll(); }, { passive: true });
