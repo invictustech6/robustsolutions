@@ -377,6 +377,8 @@ body.nav-open { overflow: hidden; }
 .media-frame { position: relative; border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--line-soft); }
 .media-frame img { width: 100%; height: 100%; object-fit: cover; min-height: 280px; }
 .media-frame--facility img { object-position: 40% 28%; }
+.media-frame--expertise { aspect-ratio: 4 / 3; }
+.media-frame--expertise img { min-height: 0; object-position: center 38%; }
 .media-frame::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.28); pointer-events: none; }
 .media-frame--float { position: relative; }
 .media-frame--float::before { content: ""; position: absolute; inset: -0.9rem -0.9rem auto auto; width: 7rem; height: 7rem; border: 2px solid var(--gold); border-radius: var(--r-lg); z-index: -1; }
