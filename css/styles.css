@@ -618,7 +618,7 @@ a.logo-slot { color: inherit; text-decoration: none; }
 .footer-bottom a { color: rgba(255,255,255,0.7); }
 
 /* Certificate hover preview — same scan as the card, large and readable */
-.cert-preview { position: fixed; inset: 0; z-index: 200; display: none; place-items: center; padding: 1.25rem; background: rgba(11, 25, 48, 0.55); pointer-events: none; }
+.cert-preview { position: fixed; inset: 0; z-index: 200; display: none; place-items: center; padding: 1.25rem; background: rgba(11, 25, 48, 0.55); }
 .cert-preview.is-open { display: grid; animation: fade-in 0.2s var(--ease); }
 .cert-preview__window { position: relative; pointer-events: auto; background: #fff; padding: 0.7rem; border-radius: 12px; box-shadow: var(--shadow-lg); border: 1px solid var(--line); max-width: min(44rem, 94vw); max-height: 92vh; }
 .cert-preview__window img { display: block; width: auto; height: auto; max-width: min(42rem, 90vw); max-height: 86vh; object-fit: contain; user-select: none; -webkit-user-drag: none; }

@@ -248,62 +248,35 @@
     } else counters.forEach(run);
   }
 
-  /* ---------- Certificate hover preview (same scan, no download) ---------- */
+  /* ---------- Certificate click preview (same scan, no download, no hover) ---------- */
   const certPreview = $("[data-cert-preview]");
   const certPreviewImg = $("[data-cert-preview-img]");
   const certPreviewWin = certPreview?.querySelector(".cert-preview__window");
   const certTriggers = $$(".certs-card, .cert[data-cert]");
-  let certHideTimer = null;
-  let certHoldUntil = 0;
-  let lastPtr = { x: 0, y: 0 };
-  document.addEventListener("mousemove", (e) => { lastPtr = { x: e.clientX, y: e.clientY }; }, { passive: true });
-  const pointerOverCertUi = () => {
-    const node = document.elementFromPoint(lastPtr.x, lastPtr.y);
-    if (!node) return false;
-    if (certPreviewWin && certPreviewWin.contains(node)) return true;
-    return certTriggers.some((el) => el.contains(node));
-  };
   const hideCertPreview = () => {
-    window.clearTimeout(certHideTimer);
     certPreview?.classList.remove("is-open");
     certPreview?.setAttribute("aria-hidden", "true");
-  };
-  const hideCertPreviewSoon = () => {
-    if (performance.now() < certHoldUntil) return;
-    window.clearTimeout(certHideTimer);
-    certHideTimer = window.setTimeout(() => {
-      if (performance.now() < certHoldUntil) return;
-      if (pointerOverCertUi()) return;
-      hideCertPreview();
-    }, 180);
   };
   const showCertPreview = (el) => {
     const srcImg = $("img", el);
     if (!certPreview || !certPreviewImg || !srcImg) return;
-    window.clearTimeout(certHideTimer);
     const src = srcImg.currentSrc || srcImg.getAttribute("src");
     if (!src) return;
     certPreviewImg.src = src;
     certPreviewImg.alt = srcImg.getAttribute("alt") || "Certificate";
     certPreview.classList.add("is-open");
     certPreview.setAttribute("aria-hidden", "false");
-    certHoldUntil = performance.now() + 400;
   };
   certTriggers.forEach((el) => {
-    el.addEventListener("mouseenter", () => showCertPreview(el));
-    el.addEventListener("mouseleave", hideCertPreviewSoon);
-    el.addEventListener("focus", () => showCertPreview(el));
-    el.addEventListener("blur", hideCertPreviewSoon);
     el.addEventListener("click", (e) => {
       e.preventDefault();
-      const srcImg = $("img", el);
-      const src = srcImg?.currentSrc || srcImg?.getAttribute("src");
-      if (certPreview?.classList.contains("is-open") && certPreviewImg?.currentSrc === src) hideCertPreview();
-      else showCertPreview(el);
+      showCertPreview(el);
     });
   });
-  certPreviewWin?.addEventListener("mouseenter", () => window.clearTimeout(certHideTimer));
-  certPreviewWin?.addEventListener("mouseleave", hideCertPreviewSoon);
+  certPreview?.addEventListener("click", (e) => {
+    if (e.target === certPreview) hideCertPreview();
+  });
+  certPreviewWin?.addEventListener("click", (e) => e.stopPropagation());
   $("[data-cert-preview-close]")?.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
