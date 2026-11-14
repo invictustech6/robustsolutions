@@ -161,11 +161,15 @@
     const dotsWrap = $("[data-certs-dots]");
     const n = cards.length;
     let index = 0;
+    const isNarrow = () => window.matchMedia("(max-width: 899px)").matches;
     const gap = () => {
+      if (isNarrow()) return 0;
       const s = window.getComputedStyle(track);
-      return parseFloat(s.columnGap || s.gap) || 22;
+      const nGap = parseFloat(s.columnGap || s.gap || "0");
+      return Number.isFinite(nGap) ? nGap : 0;
     };
     const perView = () => {
+      if (isNarrow()) return 1;
       const cardW = cards[0] ? cards[0].getBoundingClientRect().width : 220;
       const g = gap();
       return Math.max(1, Math.min(n, Math.floor((viewport.clientWidth + g) / (cardW + g))));
@@ -189,7 +193,9 @@
     };
     const layout = () => {
       index = Math.min(index, maxIndex());
-      const cardW = cards[0] ? cards[0].getBoundingClientRect().width : 0;
+      const cardW = isNarrow()
+        ? viewport.clientWidth
+        : (cards[0] ? cards[0].getBoundingClientRect().width : 0);
       const g = gap();
       track.style.transform = `translateX(${-(index * (cardW + g))}px)`;
       dots.forEach((d, i) => d.classList.toggle("is-active", i === index));
