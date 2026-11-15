@@ -330,6 +330,7 @@ body.nav-open { overflow: hidden; }
 .hero-slide { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity 0.7s ease; pointer-events: none; overflow: hidden; }
 .hero-slide.is-active { opacity: 1; pointer-events: auto; }
 .hero-slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.hero-slide--facility img { object-position: 46% 20%; }
 .hero-slide__cap,
 .media-frame__tag,
 .gallery-item figcaption { display: none !important; }
