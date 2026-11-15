@@ -129,7 +129,7 @@
     const prev = () => go(current - 1);
     $("[data-hero-next]", hero)?.addEventListener("click", () => { next(); restart(); });
     $("[data-hero-prev]", hero)?.addEventListener("click", () => { prev(); restart(); });
-    const start = () => { if (!prefersReduced && n > 1) timer = window.setInterval(next, 5500); };
+    const start = () => { if (!prefersReduced && n > 1) timer = window.setInterval(next, 3500); };
     const restart = () => { window.clearInterval(timer); start(); };
     hero.addEventListener("mouseenter", () => window.clearInterval(timer));
     hero.addEventListener("mouseleave", start);
