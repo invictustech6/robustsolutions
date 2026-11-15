@@ -534,7 +534,6 @@ body.nav-open { overflow: hidden; }
 .quotes__slide cite span { font-weight: 500; color: var(--muted); font-size: 0.88rem; }
 .quotes__nav { width: 2.4rem; height: 2.4rem; border: 0; background: transparent; color: var(--blue); font-size: 2rem; line-height: 1; cursor: pointer; border-radius: 50%; display: grid; place-items: center; }
 .quotes__nav:hover { color: var(--gold-deep); background: var(--blue-soft); }
-.quotes__note { margin: 1.4rem 0 0; color: var(--muted); font-size: 0.82rem; }
 
 /* Our Clients — auto-scrolling logo marquee */
 .clients { text-align: center; }
