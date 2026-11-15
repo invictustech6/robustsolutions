@@ -518,7 +518,7 @@ body.nav-open { overflow: hidden; }
 .logo-marquee__track {
   display: flex;
   width: max-content;
-  animation: logo-marquee 42s linear infinite;
+  animation: logo-marquee 72s linear infinite;
 }
 .logo-marquee:hover .logo-marquee__track,
 .logo-marquee:focus-within .logo-marquee__track,
