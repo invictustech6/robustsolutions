@@ -1,0 +1,8 @@
+{
+  "name": "robustsolutions-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Robust Testing Solutions — static marketing site with serverless enquiry endpoints.",
+  "type": "module",
+  "engines": { "node": ">=18" }
+}

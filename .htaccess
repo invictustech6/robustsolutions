@@ -1,0 +1,35 @@
+DirectoryIndex index.html
+Options -Indexes
+RewriteEngine On
+
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Hide index.html in the URL (/index.html → / and /about/index.html → /about/)
+RewriteCond %{THE_REQUEST} \s/+(.+/)?index\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# Old WordPress URLs
+RewriteRule ^about-us/?$ /about/ [R=301,L]
+RewriteRule ^contact-us/?$ /contact/ [R=301,L]
+RewriteRule ^contact/?$ /contact/ [R=301,L]
+RewriteRule ^book-a-test/?$ /request-a-quote/ [R=301,L]
+RewriteRule ^quote/?$ /request-a-quote/ [R=302,L]
+RewriteRule ^industries/?$ /services/ [R=301,L]
+RewriteRule ^anabolicos-legal-13/?$ /410.html [R=302,L]
+RewriteRule ^client2/?$ /410.html [R=302,L]
+RewriteRule ^testing-facilities-as-per-indian-standards-for-cables-and-conductors/?$ /services/cable-testing/ [R=301,L]
+RewriteRule ^testing-facilities-as-per-iec-standards-for-cables-and-conductors/?$ /services/cable-testing/ [R=301,L]
+RewriteRule ^testing-facilities-as-per-bsi-standards-for-cables-and-conductors/?$ /services/cable-testing/ [R=301,L]
+RewriteRule ^testing-facilities-for-solar-d-c-cables/?$ /services/cable-testing/solar-cables/ [R=301,L]
+RewriteRule ^testing-facilities-for-fire-survival-cables/?$ /services/cable-testing/fire-survival-cables/ [R=301,L]
+RewriteRule ^testing-facilities-for-electric-vehicle-charging-cables/?$ /services/cable-testing/ev-charging-cables/ [R=301,L]
+RewriteRule ^services/indian-standards/?$ /services/cable-testing/ [R=301,L]
+RewriteRule ^services/iec-standards/?$ /services/cable-testing/ [R=301,L]
+RewriteRule ^services/bsi-standards/?$ /services/cable-testing/ [R=301,L]
+RewriteRule ^services/solar-dc-cables/?$ /services/cable-testing/solar-cables/ [R=301,L]
+RewriteRule ^services/fire-survival-cables/?$ /services/cable-testing/fire-survival-cables/ [R=301,L]
+RewriteRule ^services/ev-charging-cables/?$ /services/cable-testing/ev-charging-cables/ [R=301,L]
+RewriteRule ^services/cable-testing/power-cables/?$ /services/cable-testing/power-and-control-cables/ [R=301,L]
+RewriteRule ^services/cable-testing/control-cables/?$ /services/cable-testing/power-and-control-cables/ [R=301,L]
